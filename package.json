@@ -1,0 +1,28 @@
+{
+  "name": "webxr_warehouse",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "next": "15.0.3",
+    "aframe": "^1.6.0",
+    "aframe-troika-text": "^0.11.0",
+    "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
+    "mqtt": "^5.10.1",
+    "numeric": "^1.2.6"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3"
+  }
+}

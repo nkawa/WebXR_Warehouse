@@ -1,0 +1,54 @@
+.controller{
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    width: 300px;
+    background-color:rgba(192,192,192,0.2);
+    padding: 10px;
+    display: grid;
+    button {
+        margin: 5px;
+    }
+}
+.camera-controller{
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    width: 300px;
+    background-color:rgba(192,192,192,0.2);
+    padding: 10px;
+    display: grid;
+    button {
+        margin: 5px;
+    }
+}
+
+.form-control{
+    color: rgba(60,60,60,0.8)
+}
+
+.form-center-control {
+    color: rgba(60,60,60,0.8);
+    text-align: center;
+}
+
+.frame-controller {
+    position: fixed;
+    width: 1800px;
+    height: 80px;
+    bottom: 10px;
+    background-color:rgba(192,192,192,0.2);
+    padding: 20px;
+    display: grid;
+    button {
+        margin: 5px;
+    }
+}
+
+.xr-input-range {
+    cursor: pointer;
+    position:fixed;
+    width: 95%;
+    display: grid;
+    background-color:rgba(192,192,192,0.2);
+}

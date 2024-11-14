@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.actions {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  bottom: 10%;
+  left: 3%;
+}    
+.actions .buttonUI {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.actions .button {
+  cursor: pointer;
+  background: #fff;
+  color: #171717;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  margin-right: 10px;
+  font-size: large;
+}
