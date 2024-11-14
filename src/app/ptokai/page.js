@@ -51,7 +51,7 @@ export default function Page() {
     }
 
     const tick = () => {
-        set_cur_frame((f)=> (f < 45000)?f+40:0);
+        set_cur_frame((f)=> (f < 45000)?f+2:0);
     }
 
     const play_button_listener = (ev) =>{
@@ -113,7 +113,9 @@ export default function Page() {
             require('aframe-troika-text');
             require('../../components/aframe-gui');
             require('../../vendor/button-wasd-controls');
+            require('../../components/updown-key-controls');
             require('./boxObjects.js'); // A-Frame pallets
+            require('./workerObjects.js'); // A-Frame workers
 /*
             const scene = document.querySelector("a-scene");
             const palcomp = document.createElement("a-entity");
@@ -129,13 +131,15 @@ export default function Page() {
 
     // フレーム情報が変化した場合に実行
     React.useEffect(()=>{
-
-
+        const wor = document.getElementById("workers_el");
+        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode});
     },[cur_frame]);
 
     React.useEffect(()=>{
         const palcomp = document.getElementById("pallets_el");
         palcomp.setAttribute("pallets", {frame:cur_frame, mode:disp_mode});
+        const wor = document.getElementById("workers_el");
+        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode});
     },[disp_mode]);
 
     const controllerProps = {
@@ -190,16 +194,19 @@ export default function Page() {
 
                 <a-entity id="pallets_el" pallets={"frame:"+cur_frame}>  </a-entity>
 
+                <a-entity id="workers_el" workers={"frame:"+cur_frame}>  </a-entity>
+
                 {/* Mouse cursor so we can click on the scene with mouse or touch. 
                 <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: [gui-interactable]"></a-entity>
                 <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: [gui-interactable]"></a-entity>
                   */}
                
                 {/*	 Camera + cursor. -->*/}
-                <a-entity id="cameraRig" position="0 0 0"  button-wasd-controls >
+                <a-entity id="cameraRig" position="0 0 0"  button-wasd-controls updown-key-controls>
                     <a-camera id="camera" position="0 1.6 0" wasd-controls="fly:true" >  </a-camera>
                 </a-entity>
             </a-scene>
+            <div id="hud" className="hudOverlay">HUD!</div>
 
             <div className="actions">
                 <div className="buttonUI">

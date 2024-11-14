@@ -82,6 +82,7 @@ export default function Controller(props) {
         </div>
 
       </div>
+      {/*
       <div className="camera-controller" >
         <span>CAMERA</span>
         <div className="row mb-0">
@@ -99,9 +100,9 @@ export default function Controller(props) {
         <div className="row mb-0">
           <div className="col-md-4"><label htmlFor="c_deg_x_number" className="form-label"><span className="form-control-plaintext">deg X</span></label></div>
           <div className="col-md-8"><input type="number" className="form-control" id="c_deg_x_number" value={c_deg_x} onChange={set_c_deg_x} step={0.1}/></div>
-        </div>
-
-      </div>
+        </div
+      </div>>
+        */}
       <div className="frame-controller" >
         <div className="row mb-0">
           <div className="col-md-12">

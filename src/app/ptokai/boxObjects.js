@@ -66,7 +66,7 @@ AFRAME.registerComponent("pallets", {
 
 
         try {
-            const res =  await fetch('/box_inspection_area_07-12.json');
+            const res =  await fetch('/box_insp_sort_area_07-12.json');
             const data = await res.json();
             this.pallets = data
             console.log("Load pallet ", data.length);
