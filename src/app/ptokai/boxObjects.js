@@ -104,6 +104,29 @@ AFRAME.registerComponent("pallets", {
         }
       // パレット移動情報を読み込む
 
+        try{
+            const res =  await fetch('/frame_based_pallet_1110.json');
+            const data = await res.json();
+
+            // フレーム毎の配列にしたい。（現状は各フレーム内にframe_id が入ってる）
+            var ptrack = [];
+            data.forEach((frame) => {
+                ptrack[frame.frame_id] = frame.tracks;
+            });
+            this.ptrack = ptrack;
+            console.log("Load pallet track ", data.length, ptrack.length);
+
+            const scene = document.querySelector("a-scene");
+            this.ptobj= [];
+            this.ptstate=[];
+
+            // 事前に3D 用意するの、、、むずかしいかも。
+            // なので、あえて用意せずにやってみる。。。
+            
+        }catch(err){
+            console.log("pallet track fetch error",err);
+        }
+
 
 
     },
@@ -116,6 +139,7 @@ AFRAME.registerComponent("pallets", {
         if (this.pobj === undefined) return;
 //        console.log("Pallet", this.data.mode);
 
+//   box 毎の表示方法
         if( this.data.mode =="None"){
             this.pobj.forEach((pinfo) => {
                 if( pinfo.start <= this.data.frame && pinfo.end >= this.data.frame ){                    
@@ -132,6 +156,51 @@ AFRAME.registerComponent("pallets", {
                     pinfo.obj.setAttribute("visible",true);
                 }else{
                     pinfo.obj.setAttribute("visible",false);
+                }
+            })
+        }
+
+        // pallet track の表示
+        if (this.data.mode == "None"){ // とりあえず、通常モードのみ
+
+            const frm = this.data.frame%4500; // 11:00 は 36000から　（とりあえずループでごまかす）
+
+            if (this.ptrack.hasOwnProperty(frm)){
+                const scene = document.querySelector("a-scene");
+
+                const frame_info = this.ptrack[frm];
+
+                frame_info.forEach((pinfo) => {
+                    if (this.ptobj.hasOwnProperty(pinfo.track_id)){// すでにある
+                        const xy = conv_global_to_local_xy(pinfo.bbox[0]+pinfo.bbox[2]/2,pinfo.bbox[1]+pinfo.bbox[3]/2);
+                        obj = this.ptobj[pinfo.track_id];
+                        obj.setAttribute("position",`${xy[0]} 0.4 ${xy[1]}`);
+                        this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録
+
+                    }else{// 無いので作る
+                        var obj = document.createElement("a-box");
+                        const xy = conv_global_to_local_xy(pinfo.bbox[0]+pinfo.bbox[2]/2,pinfo.bbox[1]+pinfo.bbox[3]/2);
+                        obj.setAttribute("position",`${xy[0]} 0.4 ${xy[1]}`);
+                        obj.setAttribute("width",1);
+                        obj.setAttribute("height",0.8);
+                        obj.setAttribute("depth",1);
+                        obj.setAttribute("color","#eeee00");
+                        obj.setAttribute("opacity",0.6);
+                        obj.setAttribute("visible",true);
+                        scene.appendChild(obj);
+                        this.ptobj[pinfo.track_id] = obj;
+                        this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録
+//                        console.log("New PalletMove",pinfo.track_id, xy);
+                    }
+
+                })
+            }// frame 情報がある。
+            
+            // 更新されてないobject を消す必要がある。
+            this.ptobj.forEach((obj, idx) => {
+                if( this.ptstate[idx] != frm){
+                    obj.setAttribute("visible",false);
+                    // 本当はobj も消していいかも
                 }
             })
 

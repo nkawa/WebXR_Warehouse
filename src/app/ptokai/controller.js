@@ -6,7 +6,7 @@ export default function Controller(props) {
   const {c_pos_x, c_pos_y, c_pos_z} = props
   const {c_deg_x, c_deg_y, c_deg_z} = props
   const {cur_frame, max_frame, set_cur_frame, set_max_frame} = props
-  const {disp_mode, set_disp_mode} = props
+  const {disp_mode, set_disp_mode, frame_step, set_frame_step} = props
 
 
   const set_c_pos_x = (e)=>{
@@ -44,6 +44,12 @@ export default function Controller(props) {
     props.set_cur_frame(value)
   }
 
+
+  const on_set_frame_step = (e)=>{
+    let value = Number.parseFloat(e.target.value || 0)
+    set_frame_step(value)
+  }
+
   const change_disp_mode  = ()=>{
     console.log("Disp-mode:", disp_mode)
     if (disp_mode == "None") {
@@ -66,7 +72,7 @@ export default function Controller(props) {
     const minStr = String(min).padStart(2, '0');
     const secStr = String(sec.toFixed(1)).padStart(4, '0'); // 小数点を含むため4桁に調整
 
-    return `${hourStr}:${minStr}:${secStr}`;
+    return `${hourStr}:${minStr}:${secStr} / `+frame;
   }
 
   return (
@@ -109,6 +115,10 @@ export default function Controller(props) {
             <input type="range" value={cur_frame} min={0} max={max_frame} step={1} onChange={on_set_cur_frame}
                 className="xr-input-range" id="frame" />
            </div>
+          </div>
+          <div className="col-md-12">
+            <input type="range" value={frame_step} min={1} max={500} step={1} onChange={on_set_frame_step}
+                className="xr-input-range-sm" id="frame" />
           </div>
       </div>
     </>

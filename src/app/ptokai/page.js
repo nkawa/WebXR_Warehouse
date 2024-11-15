@@ -22,6 +22,7 @@ export default function Page() {
     const [c_deg_z,set_c_deg_z] = React.useState(0)
 
     const [disp_mode,set_disp_mode] = React.useState("None")
+    const [frame_step,set_frame_step] = React.useState(10)
 
     const [cur_frame, set_cur_frame] = React.useState(0);
     const [max_frame, set_max_frame] = React.useState(9000*5);//(5hour)
@@ -51,14 +52,17 @@ export default function Page() {
     }
 
     const tick = () => {
-        set_cur_frame((f)=> (f < 45000)?f+2:0);
+        set_frame_step((fsp)=>{
+            set_cur_frame((f)=>(f < 45000)?f+fsp:0);
+            return fsp;
+        });
     }
 
     const play_button_listener = (ev) =>{
         set_interval_id((iid)=>{
 //            console.log("Interval_id",iid,ev);
             if (iid == null){
-                    const inter_id = setInterval(tick, 50)
+                    const inter_id = setInterval(tick, 100)
 //                    console.log("Set Interval",inter_id);
 //                    console.log("Button",ev.srcElement);
                     ev.srcElement.innerText="II";
@@ -116,6 +120,7 @@ export default function Page() {
             require('../../components/updown-key-controls');
             require('./boxObjects.js'); // A-Frame pallets
             require('./workerObjects.js'); // A-Frame workers
+            require('../../components/camera-move-notify');// カメラ移動通知
 /*
             const scene = document.querySelector("a-scene");
             const palcomp = document.createElement("a-entity");
@@ -146,7 +151,7 @@ export default function Page() {
         cur_frame,set_cur_frame,max_frame,set_max_frame,
         c_pos_x,set_c_pos_x,c_pos_y,set_c_pos_y,c_pos_z,set_c_pos_z,
         c_deg_x,set_c_deg_x,c_deg_y,set_c_deg_y,c_deg_z,set_c_deg_z,
-        disp_mode,set_disp_mode
+        disp_mode,set_disp_mode, frame_step, set_frame_step
     }
 
     return (
@@ -206,7 +211,7 @@ export default function Page() {
                     <a-camera id="camera" position="0 1.6 0" wasd-controls="fly:true" >  </a-camera>
                 </a-entity>
             </a-scene>
-            <div id="hud" className="hudOverlay">HUD!</div>
+            <div id="hud" className="hudOverlay"></div>
 
             <div className="actions">
                 <div className="buttonUI">

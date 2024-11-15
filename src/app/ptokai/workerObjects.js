@@ -82,7 +82,7 @@ AFRAME.registerComponent("workers", {
             const scene = document.querySelector("a-scene");
 
             const hud = document.getElementById("hud");
-            console.log("HUD",hud);
+//            console.log("HUD",hud);
             // worker object 毎に初期設定
             
             this.wobj = [];
@@ -112,6 +112,11 @@ AFRAME.registerComponent("workers", {
             console.log("worker fetch error",err);
         }
 
+        this.el.sceneEl.querySelector('[camera]').addEventListener('camera-moved', (event) => {
+            console.log('Camera moved to', event.detail.position);
+
+        });
+
     },
 
 
@@ -131,7 +136,7 @@ AFRAME.registerComponent("workers", {
 //                console.log(threeCamera); // カメラオブジェクトにアクセスして操作可能
                 const width = window.innerWidth;
                 const height = window.innerHeight;
-                console.log("width",width,"height",height);
+//                console.log("width",width,"height",height);
 
                 const frm = this.data.frame%4500; // 11:00 は 36000から
                 const frame_info = this.workers[frm].tracks;
@@ -149,11 +154,12 @@ AFRAME.registerComponent("workers", {
                     // CSS 要素に文字も表示したい
                     const object3D = this.wobj[wid].obj.object3D;
                     const worldPosition = object3D.getWorldPosition(new THREE.Vector3());
+                    worldPosition.y += 1; // 高さを調整
                     // スクリーン座標を取得する
                     const projection = worldPosition.project(threeCamera);
-                    const sx = (width / 2) * (+projection.x + 1.0);
-                    const sy = (height / 2) * (-projection.y + 1.0);
-                    console.log("Draw text",wid, sx,sy);
+                    const sx = (width / 2) * (+projection.x + 1.0)-4-(wid>9?5:0);
+                    const sy = (height / 2) * (-projection.y + 1.0)-10;
+//                    console.log("Draw text",wid, sx,sy);
                     const tf = this.textObjs[wid];
                     tf.innerHTML = `${wid}`;
                     tf.style.transform = `translate(${sx}px, ${sy}px)`;
@@ -162,6 +168,7 @@ AFRAME.registerComponent("workers", {
                 view_obj.forEach((v, idx) => {
                     if( !v){
                         this.wobj[idx].obj.setAttribute("visible",false);
+                        this.textObjs[idx].innerHTML = "";
                     }
                 });
             }
