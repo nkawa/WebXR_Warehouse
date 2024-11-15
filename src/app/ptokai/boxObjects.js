@@ -47,7 +47,8 @@ const draw_box =(box_info) =>{
 AFRAME.registerComponent("pallets", {
     schema: {
         frame: {type: 'int', default: 0},
-        mode: {type: 'string', default: 'None'}
+        mode: {type: 'string', default: 'None'},
+        ptrace: {type: 'boolean', default: true}, // パレットの移動経路を表示するかどうか
     },
   
     init: async function () {
@@ -189,8 +190,8 @@ AFRAME.registerComponent("pallets", {
                         obj.setAttribute("visible",true);
                         scene.appendChild(obj);
                         this.ptobj[pinfo.track_id] = obj;
-                        this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録
-//                        console.log("New PalletMove",pinfo.track_id, xy);
+                        this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録//
+ //                       console.log("New PalletMove",pinfo.track_id, xy);
                     }
 
                 })

@@ -8,7 +8,7 @@ export default function Controller(props) {
   const {cur_frame, max_frame, set_cur_frame, set_max_frame} = props
   const {disp_mode, set_disp_mode, frame_step, set_frame_step} = props
   const {ptrace_mode, set_ptrace_mode} = props;
-  const {label_mode, set_label_mode} = props;
+  const {label_mode, set_label_mode, worker_mode,set_worker_mode} = props;
 
   const set_c_pos_x = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -69,7 +69,9 @@ export default function Controller(props) {
     set_label_mode(e.target.checked);
   }
 
-
+  const change_worker_mode  = (e)=>{
+    set_worker_mode(e.target.checked);
+  }
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
     let hour = Math.floor(sec / 3600);
@@ -97,10 +99,13 @@ export default function Controller(props) {
         <div className="row mb-0">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">Disp-mode</span></label></div>
           <div className="col-md-2">
-            <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack 　　</label>
+            <label><input type="checkbox" className="form-center-control" id="label_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={label_mode} onChange={change_label_mode}/> Label</label> 
           </div>
-          <div className="col-md-2"><label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace</label></div>
+          <div className="col-md-2">
+            <label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
+            <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
+          </div>
         </div>
 
       </div>

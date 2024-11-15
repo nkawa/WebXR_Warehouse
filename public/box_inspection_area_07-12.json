@@ -1,0 +1,974 @@
+[
+    [
+        {
+            "start": 8899,
+            "end": 8999,
+            "pallet_id": 0,
+            "pallet_type": 2
+        },
+        {
+            "start": 9001,
+            "end": 13629,
+            "pallet_id": 1,
+            "pallet_type": 4
+        },
+        {
+            "start": 13988,
+            "end": 15184,
+            "pallet_id": 2,
+            "pallet_type": 1
+        },
+        {
+            "start": 20491,
+            "end": 23762,
+            "pallet_id": 3,
+            "pallet_type": 1
+        },
+        {
+            "start": 31830,
+            "end": 38377,
+            "pallet_id": 4,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 10463,
+            "end": 15132,
+            "pallet_id": 5,
+            "pallet_type": 4
+        },
+        {
+            "start": 15183,
+            "end": 16972,
+            "pallet_id": 6,
+            "pallet_type": 4
+        },
+        {
+            "start": 33304,
+            "end": 40681,
+            "pallet_id": 7,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 25751,
+            "end": 26590,
+            "pallet_id": 8,
+            "pallet_type": 4
+        },
+        {
+            "start": 33799,
+            "end": 34936,
+            "pallet_id": 9,
+            "pallet_type": 4
+        },
+        {
+            "start": 34997,
+            "end": 35896,
+            "pallet_id": 10,
+            "pallet_type": 3
+        },
+        {
+            "start": 36169,
+            "end": 38533,
+            "pallet_id": 11,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 2132,
+            "end": 8999,
+            "pallet_id": 12,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 18757,
+            "pallet_id": 13,
+            "pallet_type": 4
+        },
+        {
+            "start": 20683,
+            "end": 26935,
+            "pallet_id": 14,
+            "pallet_type": 4
+        },
+        {
+            "start": 31002,
+            "end": 33465,
+            "pallet_id": 15,
+            "pallet_type": 1
+        },
+        {
+            "start": 39488,
+            "end": 41996,
+            "pallet_id": 16,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 4023,
+            "end": 8999,
+            "pallet_id": 17,
+            "pallet_type": 4
+        },
+        {
+            "start": 9001,
+            "end": 17185,
+            "pallet_id": 18,
+            "pallet_type": 4
+        },
+        {
+            "start": 19570,
+            "end": 30003,
+            "pallet_id": 19,
+            "pallet_type": 4
+        },
+        {
+            "start": 30974,
+            "end": 35700,
+            "pallet_id": 20,
+            "pallet_type": 4
+        },
+        {
+            "start": 38224,
+            "end": 41324,
+            "pallet_id": 21,
+            "pallet_type": 3
+        },
+        {
+            "start": 43726,
+            "end": 45002,
+            "pallet_id": 22,
+            "pallet_type": 4
+        }
+    ],
+    [
+        {
+            "start": 18362,
+            "end": 22798,
+            "pallet_id": 23,
+            "pallet_type": 1
+        },
+        {
+            "start": 23596,
+            "end": 31189,
+            "pallet_id": 24,
+            "pallet_type": 3
+        },
+        {
+            "start": 37618,
+            "end": 39958,
+            "pallet_id": 25,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 11098,
+            "end": 30211,
+            "pallet_id": 26,
+            "pallet_type": 4
+        },
+        {
+            "start": 38000,
+            "end": 45002,
+            "pallet_id": 27,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 13784,
+            "end": 33368,
+            "pallet_id": 28,
+            "pallet_type": 4
+        },
+        {
+            "start": 38301,
+            "end": 42162,
+            "pallet_id": 29,
+            "pallet_type": 1
+        },
+        {
+            "start": 43836,
+            "end": 45002,
+            "pallet_id": 30,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 15582,
+            "end": 30299,
+            "pallet_id": 31,
+            "pallet_type": 4
+        },
+        {
+            "start": 30335,
+            "end": 33196,
+            "pallet_id": 32,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 10350,
+            "end": 24826,
+            "pallet_id": 33,
+            "pallet_type": 4
+        },
+        {
+            "start": 26808,
+            "end": 27887,
+            "pallet_id": 34,
+            "pallet_type": 4
+        },
+        {
+            "start": 37387,
+            "end": 38936,
+            "pallet_id": 35,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 10726,
+            "end": 33430,
+            "pallet_id": 36,
+            "pallet_type": 1
+        },
+        {
+            "start": 37581,
+            "end": 41651,
+            "pallet_id": 37,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 12562,
+            "end": 33377,
+            "pallet_id": 38,
+            "pallet_type": 3
+        },
+        {
+            "start": 37757,
+            "end": 41487,
+            "pallet_id": 39,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 9060,
+            "end": 25256,
+            "pallet_id": 40,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 9658,
+            "end": 33510,
+            "pallet_id": 41,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 10589,
+            "end": 40342,
+            "pallet_id": 42,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 8721,
+            "end": 8999,
+            "pallet_id": 43,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 10531,
+            "pallet_id": 44,
+            "pallet_type": 3
+        },
+        {
+            "start": 10753,
+            "end": 45002,
+            "pallet_id": 45,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 8346,
+            "end": 8999,
+            "pallet_id": 46,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 31541,
+            "pallet_id": 47,
+            "pallet_type": 4
+        },
+        {
+            "start": 31748,
+            "end": 39185,
+            "pallet_id": 48,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 7784,
+            "end": 8999,
+            "pallet_id": 49,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 40117,
+            "pallet_id": 50,
+            "pallet_type": 0
+        }
+    ],
+    [
+        {
+            "start": 0,
+            "end": 8999,
+            "pallet_id": 51,
+            "pallet_type": 2
+        },
+        {
+            "start": 9001,
+            "end": 45002,
+            "pallet_id": 52,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 0,
+            "end": 8999,
+            "pallet_id": 53,
+            "pallet_type": 3
+        },
+        {
+            "start": 9001,
+            "end": 45002,
+            "pallet_id": 54,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 0,
+            "end": 8999,
+            "pallet_id": 55,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 45002,
+            "pallet_id": 56,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 7495,
+            "end": 8999,
+            "pallet_id": 57,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 12358,
+            "pallet_id": 58,
+            "pallet_type": 4
+        },
+        {
+            "start": 12609,
+            "end": 25172,
+            "pallet_id": 59,
+            "pallet_type": 4
+        },
+        {
+            "start": 25212,
+            "end": 31504,
+            "pallet_id": 60,
+            "pallet_type": 4
+        },
+        {
+            "start": 31703,
+            "end": 37289,
+            "pallet_id": 61,
+            "pallet_type": 4
+        },
+        {
+            "start": 38011,
+            "end": 42158,
+            "pallet_id": 62,
+            "pallet_type": 4
+        },
+        {
+            "start": 42890,
+            "end": 45002,
+            "pallet_id": 63,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 7330,
+            "end": 8999,
+            "pallet_id": 64,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 12193,
+            "pallet_id": 65,
+            "pallet_type": 1
+        },
+        {
+            "start": 12480,
+            "end": 14162,
+            "pallet_id": 66,
+            "pallet_type": 4
+        },
+        {
+            "start": 14970,
+            "end": 20855,
+            "pallet_id": 67,
+            "pallet_type": 4
+        },
+        {
+            "start": 21781,
+            "end": 29200,
+            "pallet_id": 68,
+            "pallet_type": 1
+        },
+        {
+            "start": 37722,
+            "end": 45002,
+            "pallet_id": 69,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 5580,
+            "end": 8999,
+            "pallet_id": 70,
+            "pallet_type": 4
+        },
+        {
+            "start": 9001,
+            "end": 13204,
+            "pallet_id": 71,
+            "pallet_type": 4
+        },
+        {
+            "start": 13949,
+            "end": 18696,
+            "pallet_id": 72,
+            "pallet_type": 1
+        },
+        {
+            "start": 19330,
+            "end": 25003,
+            "pallet_id": 73,
+            "pallet_type": 4
+        },
+        {
+            "start": 27494,
+            "end": 37909,
+            "pallet_id": 74,
+            "pallet_type": 1
+        },
+        {
+            "start": 43014,
+            "end": 45002,
+            "pallet_id": 75,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 4549,
+            "end": 8999,
+            "pallet_id": 76,
+            "pallet_type": 4
+        },
+        {
+            "start": 9001,
+            "end": 14041,
+            "pallet_id": 77,
+            "pallet_type": 4
+        },
+        {
+            "start": 14634,
+            "end": 16636,
+            "pallet_id": 78,
+            "pallet_type": 4
+        },
+        {
+            "start": 18011,
+            "end": 23348,
+            "pallet_id": 79,
+            "pallet_type": 1
+        },
+        {
+            "start": 23725,
+            "end": 28214,
+            "pallet_id": 80,
+            "pallet_type": 4
+        },
+        {
+            "start": 28638,
+            "end": 30702,
+            "pallet_id": 81,
+            "pallet_type": 4
+        },
+        {
+            "start": 30827,
+            "end": 33200,
+            "pallet_id": 82,
+            "pallet_type": 3
+        },
+        {
+            "start": 36677,
+            "end": 39920,
+            "pallet_id": 83,
+            "pallet_type": 4
+        },
+        {
+            "start": 41678,
+            "end": 45002,
+            "pallet_id": 84,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 1662,
+            "end": 8999,
+            "pallet_id": 85,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 11252,
+            "pallet_id": 86,
+            "pallet_type": 4
+        },
+        {
+            "start": 12358,
+            "end": 13557,
+            "pallet_id": 87,
+            "pallet_type": 4
+        },
+        {
+            "start": 13668,
+            "end": 15739,
+            "pallet_id": 88,
+            "pallet_type": 4
+        },
+        {
+            "start": 18105,
+            "end": 22665,
+            "pallet_id": 89,
+            "pallet_type": 4
+        },
+        {
+            "start": 23104,
+            "end": 26594,
+            "pallet_id": 90,
+            "pallet_type": 4
+        },
+        {
+            "start": 27893,
+            "end": 31391,
+            "pallet_id": 91,
+            "pallet_type": 4
+        },
+        {
+            "start": 33128,
+            "end": 39308,
+            "pallet_id": 92,
+            "pallet_type": 4
+        },
+        {
+            "start": 39543,
+            "end": 45002,
+            "pallet_id": 93,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 7163,
+            "end": 8999,
+            "pallet_id": 94,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 16483,
+            "pallet_id": 95,
+            "pallet_type": 1
+        },
+        {
+            "start": 17884,
+            "end": 23447,
+            "pallet_id": 96,
+            "pallet_type": 4
+        },
+        {
+            "start": 23516,
+            "end": 32695,
+            "pallet_id": 97,
+            "pallet_type": 4
+        },
+        {
+            "start": 33724,
+            "end": 37440,
+            "pallet_id": 98,
+            "pallet_type": 1
+        },
+        {
+            "start": 37582,
+            "end": 45002,
+            "pallet_id": 99,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 6995,
+            "end": 8999,
+            "pallet_id": 100,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 14688,
+            "pallet_id": 101,
+            "pallet_type": 1
+        },
+        {
+            "start": 14793,
+            "end": 21194,
+            "pallet_id": 102,
+            "pallet_type": 1
+        },
+        {
+            "start": 21452,
+            "end": 25898,
+            "pallet_id": 103,
+            "pallet_type": 4
+        },
+        {
+            "start": 26076,
+            "end": 30957,
+            "pallet_id": 104,
+            "pallet_type": 4
+        },
+        {
+            "start": 33531,
+            "end": 45002,
+            "pallet_id": 105,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 5307,
+            "end": 8999,
+            "pallet_id": 106,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 18829,
+            "pallet_id": 107,
+            "pallet_type": 1
+        },
+        {
+            "start": 18919,
+            "end": 25598,
+            "pallet_id": 108,
+            "pallet_type": 4
+        },
+        {
+            "start": 26554,
+            "end": 27813,
+            "pallet_id": 109,
+            "pallet_type": 4
+        },
+        {
+            "start": 30978,
+            "end": 38203,
+            "pallet_id": 110,
+            "pallet_type": 4
+        },
+        {
+            "start": 41828,
+            "end": 45002,
+            "pallet_id": 111,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 16162,
+            "end": 21541,
+            "pallet_id": 112,
+            "pallet_type": 1
+        },
+        {
+            "start": 22825,
+            "end": 34451,
+            "pallet_id": 113,
+            "pallet_type": 3
+        },
+        {
+            "start": 35277,
+            "end": 42125,
+            "pallet_id": 114,
+            "pallet_type": 3
+        },
+        {
+            "start": 42137,
+            "end": 43202,
+            "pallet_id": 115,
+            "pallet_type": 4
+        },
+        {
+            "start": 43323,
+            "end": 45002,
+            "pallet_id": 116,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 881,
+            "end": 8999,
+            "pallet_id": 117,
+            "pallet_type": 4
+        },
+        {
+            "start": 9001,
+            "end": 11330,
+            "pallet_id": 118,
+            "pallet_type": 4
+        },
+        {
+            "start": 12061,
+            "end": 14931,
+            "pallet_id": 119,
+            "pallet_type": 4
+        },
+        {
+            "start": 16144,
+            "end": 21429,
+            "pallet_id": 120,
+            "pallet_type": 1
+        },
+        {
+            "start": 22425,
+            "end": 28105,
+            "pallet_id": 121,
+            "pallet_type": 4
+        },
+        {
+            "start": 28134,
+            "end": 30953,
+            "pallet_id": 122,
+            "pallet_type": 4
+        },
+        {
+            "start": 35951,
+            "end": 43104,
+            "pallet_id": 123,
+            "pallet_type": 4
+        },
+        {
+            "start": 43422,
+            "end": 45002,
+            "pallet_id": 124,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 6854,
+            "end": 8999,
+            "pallet_id": 125,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 16258,
+            "pallet_id": 126,
+            "pallet_type": 4
+        },
+        {
+            "start": 17150,
+            "end": 23616,
+            "pallet_id": 127,
+            "pallet_type": 1
+        },
+        {
+            "start": 23909,
+            "end": 45002,
+            "pallet_id": 128,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 6008,
+            "end": 8999,
+            "pallet_id": 129,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 31173,
+            "pallet_id": 130,
+            "pallet_type": 4
+        },
+        {
+            "start": 32509,
+            "end": 38392,
+            "pallet_id": 131,
+            "pallet_type": 4
+        },
+        {
+            "start": 39679,
+            "end": 45002,
+            "pallet_id": 132,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 4815,
+            "end": 8999,
+            "pallet_id": 133,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 24601,
+            "pallet_id": 134,
+            "pallet_type": 4
+        },
+        {
+            "start": 24727,
+            "end": 31715,
+            "pallet_id": 135,
+            "pallet_type": 4
+        },
+        {
+            "start": 33866,
+            "end": 38258,
+            "pallet_id": 136,
+            "pallet_type": 3
+        },
+        {
+            "start": 40593,
+            "end": 45002,
+            "pallet_id": 137,
+            "pallet_type": 1
+        }
+    ],
+    [
+        {
+            "start": 2418,
+            "end": 8999,
+            "pallet_id": 138,
+            "pallet_type": 4
+        },
+        {
+            "start": 9001,
+            "end": 21770,
+            "pallet_id": 139,
+            "pallet_type": 4
+        },
+        {
+            "start": 22082,
+            "end": 24568,
+            "pallet_id": 140,
+            "pallet_type": 4
+        },
+        {
+            "start": 24805,
+            "end": 31689,
+            "pallet_id": 141,
+            "pallet_type": 4
+        },
+        {
+            "start": 34284,
+            "end": 40204,
+            "pallet_id": 142,
+            "pallet_type": 1
+        },
+        {
+            "start": 40376,
+            "end": 45002,
+            "pallet_id": 143,
+            "pallet_type": 3
+        }
+    ],
+    [
+        {
+            "start": 219,
+            "end": 8999,
+            "pallet_id": 144,
+            "pallet_type": 1
+        },
+        {
+            "start": 9001,
+            "end": 13428,
+            "pallet_id": 145,
+            "pallet_type": 1
+        },
+        {
+            "start": 13519,
+            "end": 15575,
+            "pallet_id": 146,
+            "pallet_type": 4
+        },
+        {
+            "start": 15982,
+            "end": 24515,
+            "pallet_id": 147,
+            "pallet_type": 4
+        },
+        {
+            "start": 24835,
+            "end": 29338,
+            "pallet_id": 148,
+            "pallet_type": 4
+        },
+        {
+            "start": 34401,
+            "end": 45002,
+            "pallet_id": 149,
+            "pallet_type": 1
+        }
+    ]
+]

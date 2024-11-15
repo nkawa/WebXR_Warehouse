@@ -70,6 +70,7 @@ AFRAME.registerComponent("workers", {
     schema: {
         frame: {type: 'int', default: 0},
         mode: {type: 'string', default: 'None'},
+        worker: {type: 'boolean', default: true},
         label: {type: 'boolean', default: true}
     },
   
@@ -167,8 +168,10 @@ AFRAME.registerComponent("workers", {
 
                 });
                 view_obj.forEach((v, idx) => {
-                    if( !v ||  !this.data.label){
+                    if( !v ||  !this.data.worker){
                         this.wobj[idx].obj.setAttribute("visible",false);
+                    }
+                    if( !v ||  !this.data.label){
                         this.textObjs[idx].innerHTML = "";
                     }
                 });

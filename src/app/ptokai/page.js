@@ -25,6 +25,7 @@ export default function Page() {
     const [frame_step,set_frame_step] = React.useState(10)
     const [ptrace_mode,set_ptrace_mode] = React.useState(false);
     const [label_mode, set_label_mode] = React.useState(true);
+    const [worker_mode, set_worker_mode] = React.useState(true);
 
     const [cur_frame, set_cur_frame] = React.useState(0);
     const [max_frame, set_max_frame] = React.useState(9000*5);//(5hour)
@@ -151,8 +152,8 @@ export default function Page() {
 
     React.useEffect(()=>{
         const wor = document.getElementById("workers_el");
-        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode});
-    },[label_mode]);
+        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode, worker:worker_mode});
+    },[label_mode, worker_mode]);
 
     const controllerProps = {
         cur_frame,set_cur_frame,max_frame,set_max_frame,
@@ -160,7 +161,7 @@ export default function Page() {
         c_deg_x,set_c_deg_x,c_deg_y,set_c_deg_y,c_deg_z,set_c_deg_z,
         disp_mode,set_disp_mode, frame_step, set_frame_step,
         ptrace_mode,set_ptrace_mode,
-        label_mode, set_label_mode
+        label_mode, set_label_mode, worker_mode,set_worker_mode
     }
 
     return (
