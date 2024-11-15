@@ -7,7 +7,8 @@ export default function Controller(props) {
   const {c_deg_x, c_deg_y, c_deg_z} = props
   const {cur_frame, max_frame, set_cur_frame, set_max_frame} = props
   const {disp_mode, set_disp_mode, frame_step, set_frame_step} = props
-
+  const {ptrace_mode, set_ptrace_mode} = props;
+  const {label_mode, set_label_mode} = props;
 
   const set_c_pos_x = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -58,6 +59,16 @@ export default function Controller(props) {
       set_disp_mode("None")
     }   
   }
+  
+  const change_ptrace_mode  = (e)=>{
+    console.log("Ptrace-mode:", e.target.checked)
+    set_ptrace_mode(e.target.checked);
+  }
+
+  const change_label_mode  = (e)=>{
+    set_label_mode(e.target.checked);
+  }
+
 
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
@@ -72,19 +83,24 @@ export default function Controller(props) {
     const minStr = String(min).padStart(2, '0');
     const secStr = String(sec.toFixed(1)).padStart(4, '0'); // 小数点を含むため4桁に調整
 
-    return `${hourStr}:${minStr}:${secStr} / `+frame;
+    return `${hourStr}:${minStr}:${secStr} / `+frame+":"+frame_step;
   }
+
 
   return (
     <>
       <div className="controller" >
         <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="curnum" className="form-label"><span className="form-control-plaintext">Cur Frame</span></label></div>
+          <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">Cur Frame</span></label></div>
           <div className="col-md-2"><input type="string" className="form-center-control" id="frame_time" value={frame_to_time(cur_frame)} readOnly/></div>
         </div>
         <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="cur2" className="form-label"><span className="form-control-plaintext">Disp-mode</span></label></div>
-          <div className="col-md-2"><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/></div>
+          <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">Disp-mode</span></label></div>
+          <div className="col-md-2">
+            <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack 　　</label>
+            <label><input type="checkbox" className="form-center-control" id="label_mode" checked={label_mode} onChange={change_label_mode}/> Label</label> 
+          </div>
+          <div className="col-md-2"><label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace</label></div>
         </div>
 
       </div>

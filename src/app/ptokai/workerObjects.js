@@ -69,7 +69,8 @@ const worker_colors = [
 AFRAME.registerComponent("workers", {
     schema: {
         frame: {type: 'int', default: 0},
-        mode: {type: 'string', default: 'None'}
+        mode: {type: 'string', default: 'None'},
+        label: {type: 'boolean', default: true}
     },
   
     init: async function () {
@@ -166,7 +167,7 @@ AFRAME.registerComponent("workers", {
 
                 });
                 view_obj.forEach((v, idx) => {
-                    if( !v){
+                    if( !v ||  !this.data.label){
                         this.wobj[idx].obj.setAttribute("visible",false);
                         this.textObjs[idx].innerHTML = "";
                     }
