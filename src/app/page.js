@@ -43,7 +43,7 @@ export default function Page() {
       }
       //        console.log("data", data);
       set_menu_item(data);
-    }, [window]);
+    }, []);
 
 
     return (

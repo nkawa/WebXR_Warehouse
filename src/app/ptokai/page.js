@@ -158,7 +158,7 @@ export default function Page() {
             set_control_buttons();
         }
 //        checkGLsize();
-    }, [window]);
+    }, []);
 
 
     // フレーム情報が変化した場合に実行

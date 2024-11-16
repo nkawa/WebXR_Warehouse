@@ -77,6 +77,9 @@ AFRAME.registerComponent("workers", {
     init: async function () {
       // To keep track of the pressed keys.
       console.log("Initialize Workers!!", this.data.frame);
+      this.previousPosition = new THREE.Vector3()
+      this.previousRotation = new THREE.Euler();
+
         try {
             const res = await fetch('/frame_based_worker_1110.json');
             this.workers = await res.json();
@@ -110,20 +113,80 @@ AFRAME.registerComponent("workers", {
                 this.textObjs.push(textObj);
             }
             console.log("Worker Object Added",this.wobj.length);
+            
         }catch(err){
             console.log("worker fetch error",err);
         }
 
-        this.el.sceneEl.querySelector('[camera]').addEventListener('camera-moved', (event) => {
-            console.log('Camera moved to', event.detail.position);
-
-        });
+        this.camera = document.querySelector("a-camera");
+        this.threeCamera = this.camera.getObject3D('camera');
+//        console.log("Got Cameras",this.camera, this.threeCamera);
 
     },
 
+    updateLabels: function () {
+        // CSSで文字表示 
+        if (!this.data.label) return;
+        if (this.wobj === undefined) return;
+        if (this.threeCamera === undefined) return;
 
+        const frm = this.data.frame%4500; // 11:00 は 36000から
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const frame_info = this.workers[frm].tracks;
+        const view_obj = Array(39).fill(false);
+
+        frame_info.forEach((winfo, idx) => {
+            const wid = winfo.track_id ;
+            const object3D = this.wobj[wid].obj.object3D;
+            const worldPosition = object3D.getWorldPosition(new THREE.Vector3());
+            worldPosition.y += 1; //　ラベル表示位置を 1m 上空に 高さを調整
+            // スクリーン座標を取得する
+            const projection = worldPosition.project(this.threeCamera);
+            if (projection.z > 1.0) return; // カメラの後ろにある場合は表示しない
+            const sx = (width / 2) * (+projection.x + 1.0)-4-(wid>9?5:0);
+            const sy = (height / 2) * (-projection.y + 1.0)-10;
+            if (sx < 0 || sx > width || sy < 0 || sy > height) return; // 画面外の場合は表示しない
+        //                    console.log("Draw text",wid, sx,sy);
+            const tf = this.textObjs[wid];
+            view_obj[wid] = true;
+            tf.innerHTML = `${wid}`;
+            tf.style.transform = `translate(${sx}px, ${sy}px)`;
+        });
+
+        view_obj.forEach((v, idx) => {
+            if( !v ||  !this.data.label){
+                this.textObjs[idx].innerHTML = "";
+            }
+        });
+    },
   
     tick: function (time, delta) {
+        // カメラが動いたかを検知したい
+        if (this.camera === undefined) return;
+        const currentPosition = this.camera.object3D.position;
+        const currentRotation = this.camera.object3D.rotation;
+        const moved = !currentPosition.equals(this.previousPosition);
+        const rotated = !currentRotation.equals(this.previousRotation);
+
+  
+        // カメラの位置が変化したかチェック
+        if (moved) {
+//          console.log('カメラが移動しました:', currentPosition);
+          this.previousPosition.copy(currentPosition);
+        }
+  
+        // カメラの回転が変化したかチェック
+        if (rotated) {
+  //        console.log('カメラが回転しました:', currentRotation);
+          this.previousRotation.copy(currentRotation);
+        }
+
+        if (moved || rotated){// css 変更
+            this.updateLabels();
+        }
+
     },
   
     update: function (oldData) {
@@ -131,14 +194,6 @@ AFRAME.registerComponent("workers", {
 //        console.log("Pllet", this.data.mode);
 
         if( this.data.mode =="None"){
-//            console.log("Worker None",this.data.frame);
-            const cameraEl = document.querySelector("a-camera");            
-            if (cameraEl && cameraEl.object3D && cameraEl.object3D.children) {
-                const threeCamera = cameraEl.getObject3D('camera'); // THREE.jsカメラオブジェクトを取得
-//                console.log(threeCamera); // カメラオブジェクトにアクセスして操作可能
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-//                console.log("width",width,"height",height);
 
                 const frm = this.data.frame%4500; // 11:00 は 36000から
                 const frame_info = this.workers[frm].tracks;
@@ -152,30 +207,15 @@ AFRAME.registerComponent("workers", {
                     const xy2 = conv_global_to_local_xy(xy[0]+xy[2]/2,xy[1]+xy[3]/2);
                     this.wobj[wid].obj.setAttribute("position" , xy2[0]+" 0.8 "+xy2[1]);
                     this.wobj[wid].obj.setAttribute("visible",true);
-
-                    // CSS 要素に文字も表示したい
-                    const object3D = this.wobj[wid].obj.object3D;
-                    const worldPosition = object3D.getWorldPosition(new THREE.Vector3());
-                    worldPosition.y += 1; // 高さを調整
-                    // スクリーン座標を取得する
-                    const projection = worldPosition.project(threeCamera);
-                    const sx = (width / 2) * (+projection.x + 1.0)-4-(wid>9?5:0);
-                    const sy = (height / 2) * (-projection.y + 1.0)-10;
-//                    console.log("Draw text",wid, sx,sy);
-                    const tf = this.textObjs[wid];
-                    tf.innerHTML = `${wid}`;
-                    tf.style.transform = `translate(${sx}px, ${sy}px)`;
-
                 });
+                this.updateLabels();
+                // 表示されなかったオブジェクトを消す
                 view_obj.forEach((v, idx) => {
                     if( !v ||  !this.data.worker){
                         this.wobj[idx].obj.setAttribute("visible",false);
                     }
-                    if( !v ||  !this.data.label){
-                        this.textObjs[idx].innerHTML = "";
-                    }
+
                 });
-            }
 
         }
         

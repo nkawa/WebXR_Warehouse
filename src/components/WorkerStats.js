@@ -126,7 +126,7 @@ const WorkerStats = (props) => {
                 <div 
                   style={{ 
                     width: '8px', 
-                    height: '8px', 
+                    height: '14px', 
                     borderRadius: '2px',
                     backgroundColor: type.color 
                   }}
@@ -142,7 +142,7 @@ const WorkerStats = (props) => {
             <tr>{/*</tr> style={{ borderBottom: '1px solid #eee' }}>*/}
               <th style={{ padding: '2px', textAlign: 'center', width: '20px' }}>ID</th>
               <th style={{ padding: '2px', textAlign: 'left', width: '48px' }}>移動距離</th>
-              <th style={{ padding: '2px', textAlign: 'left' }}>作業内訳（推定）</th>
+              <th style={{ padding: '2px', textAlign: 'left' }}>作業内訳（１時間中の推定値）</th>
             </tr>
           </thead>
           <tbody>
