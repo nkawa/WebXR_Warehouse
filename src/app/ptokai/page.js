@@ -15,22 +15,17 @@ import { load_workers } from './load_worker_stat.js';
 
 export default function Page() {
 
-    const [c_pos_x,set_c_pos_x] = React.useState(0)
-    const [c_pos_y,set_c_pos_y] = React.useState(0.5)
-    const [c_pos_z,set_c_pos_z] = React.useState(1.0)
-    const [c_deg_x,set_c_deg_x] = React.useState(0)
-    const [c_deg_y,set_c_deg_y] = React.useState(0)
-    const [c_deg_z,set_c_deg_z] = React.useState(0)
 
     const [disp_mode,set_disp_mode] = React.useState("None")
-    const [frame_step,set_frame_step] = React.useState(10)
+    const [frame_step,set_frame_step] = React.useState(2)
     const [ptrace_mode,set_ptrace_mode] = React.useState(false);
     const [label_mode, set_label_mode] = React.useState(true);
+    const [task_label, set_task_label] = React.useState(true);
     const [worker_mode, set_worker_mode] = React.useState(true);
     const [worker_disp, set_worker_disp] = React.useState(true);
     const [worker_stat, set_worker_stat] = React.useState([]);
-
-    const [cur_frame, set_cur_frame] = React.useState(0);
+    const [min_frame, set_min_frame] = React.useState(9000*4); // 11:00-
+    const [cur_frame, set_cur_frame] = React.useState(9000*4); // 11:00-
     const [max_frame, set_max_frame] = React.useState(9000*5);//(5hour)
     const [interval_id, set_interval_id] = React.useState(null);
 
@@ -111,10 +106,10 @@ export default function Page() {
             const camel = document.getElementById("camera");
             camel.setAttribute("position","0 1.6 0");
             camel.setAttribute("rotation","0 0 0"); 
-            console.log("Camera",camel.object3D.rotation);
+//            console.log("Camera",camel.object3D.rotation);
             cam.setAttribute("position","0 0 0");
             cam.setAttribute("rotation","0 0 0"); 
-            console.log("Maru", cam.object3D.rotation);
+//            console.log("Maru", cam.object3D.rotation);
             
         });
         const shikakuButton  = document.getElementById("shikaku");
@@ -145,7 +140,7 @@ export default function Page() {
             const stat_data = load_workers();
             console.log("Stat data",stat_data);
             stat_data.then((data)=>{
-                console.log("promised data",stat_data);
+//                console.log("promised data",stat_data);
                 set_worker_stat(data);
             });
     /*
@@ -176,13 +171,12 @@ export default function Page() {
 
     React.useEffect(()=>{
         const wor = document.getElementById("workers_el");
-        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode, worker:worker_mode});
-    },[label_mode, worker_mode]);
+        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode, task: task_label, worker:worker_mode});
+    },[label_mode, worker_mode, task_label]);
 
     const controllerProps = {
         cur_frame,set_cur_frame,max_frame,set_max_frame,
-        c_pos_x,set_c_pos_x,c_pos_y,set_c_pos_y,c_pos_z,set_c_pos_z,
-        c_deg_x,set_c_deg_x,c_deg_y,set_c_deg_y,c_deg_z,set_c_deg_z,
+        min_frame, task_label, set_task_label,
         disp_mode,set_disp_mode, frame_step, set_frame_step,
         ptrace_mode,set_ptrace_mode,
         label_mode, set_label_mode, worker_mode,set_worker_mode,
@@ -242,8 +236,8 @@ export default function Page() {
                   */}
                
                 {/*	 Camera + cursor. -->*/}
-                <a-entity id="cameraRig" position="0 0 0"  button-wasd-controls updown-key-controls>
-                    <a-camera id="camera" position="0 1.6 0" wasd-controls="fly:true" >  </a-camera>
+                <a-entity id="cameraRig" position="0 0 0"  >
+                    <a-camera id="camera" position="0 1.6 0" wasd-controls="fly:true" button-wasd-controls updown-key-controls >  </a-camera>
                 </a-entity>
             </a-scene>
             <div id="hud" className="hudOverlay"></div>

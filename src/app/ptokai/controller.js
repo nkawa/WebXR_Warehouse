@@ -5,12 +5,11 @@ import WorkerStats from '../../components/WorkerStats';
 
 
 export default function Controller(props) {
-  const {c_pos_x, c_pos_y, c_pos_z} = props
-  const {c_deg_x, c_deg_y, c_deg_z} = props
+  const {min_frame} = props
   const {cur_frame, max_frame, set_cur_frame, set_max_frame} = props
   const {disp_mode, set_disp_mode, frame_step, set_frame_step} = props
   const {ptrace_mode, set_ptrace_mode} = props;
-  const {label_mode, set_label_mode, worker_mode,set_worker_mode} = props;
+  const {label_mode, set_label_mode, worker_mode,set_worker_mode, task_label, set_task_label} = props;
   const {worker_disp, set_worker_disp, worker_stat, set_worker_stat} = props;
   const {set_select_id} = props;
 
@@ -73,6 +72,9 @@ export default function Controller(props) {
     set_label_mode(e.target.checked);
   }
 
+  const change_task_label  = (e)=>{
+    set_task_label(e.target.checked);
+  }
   const change_worker_mode  = (e)=>{
     set_worker_mode(e.target.checked);
   }
@@ -110,6 +112,8 @@ export default function Controller(props) {
           <div className="col-md-2">
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={label_mode} onChange={change_label_mode}/> Label</label> 
+            <label><input type="checkbox" className="form-center-control" id="label_mode" checked={task_label} onChange={change_task_label}/> Task</label> 
+            <br/>
             <label><input type="checkbox" className="form-center-control" id="label_work" checked={worker_disp} onChange={change_worker_disp}/> Stats</label>
           </div>
           <div className="col-md-2">
@@ -131,12 +135,12 @@ export default function Controller(props) {
       <div className="frame-controller" >
         <div className="row mb-0">
           <div className="col-md-12">
-            <input type="range" value={cur_frame} min={0} max={max_frame} step={1} onChange={on_set_cur_frame}
+            <input type="range" value={cur_frame} min={min_frame} max={max_frame} step={1} onChange={on_set_cur_frame}
                 className="xr-input-range" id="frame" />
            </div>
           </div>
           <div className="col-md-12">
-            <input type="range" value={frame_step} min={1} max={500} step={1} onChange={on_set_frame_step}
+            <input type="range" value={frame_step} min={1} max={100} step={1} width={500} onChange={on_set_frame_step}
                 className="xr-input-range-sm" id="frame" />
           </div>
       </div>

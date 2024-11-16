@@ -48,7 +48,9 @@
             "start": 33304,
             "end": 40681,
             "pallet_id": 7,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 36272,
+            "inspect_end": 38494
         }
     ],
     [
@@ -74,7 +76,9 @@
             "start": 36169,
             "end": 38533,
             "pallet_id": 11,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 36509,
+            "inspect_end": 38126
         }
     ],
     [
@@ -106,7 +110,9 @@
             "start": 39488,
             "end": 41996,
             "pallet_id": 16,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 40922,
+            "inspect_end": 41472
         }
     ],
     [
@@ -138,13 +144,17 @@
             "start": 38224,
             "end": 41324,
             "pallet_id": 21,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 39559,
+            "inspect_end": 40662
         },
         {
             "start": 43726,
             "end": 45002,
             "pallet_id": 22,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 44580,
+            "inspect_end": 44580
         }
     ],
     [
@@ -164,7 +174,9 @@
             "start": 37618,
             "end": 39958,
             "pallet_id": 25,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 38859,
+            "inspect_end": 39222
         }
     ],
     [
@@ -178,7 +190,9 @@
             "start": 38000,
             "end": 45002,
             "pallet_id": 27,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 41412,
+            "inspect_end": 43572
         }
     ],
     [
@@ -192,13 +206,17 @@
             "start": 38301,
             "end": 42162,
             "pallet_id": 29,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 40367,
+            "inspect_end": 41827
         },
         {
             "start": 43836,
             "end": 45002,
             "pallet_id": 30,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 44540,
+            "inspect_end": 44540
         }
     ],
     [
@@ -232,7 +250,9 @@
             "start": 37387,
             "end": 38936,
             "pallet_id": 35,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 38315,
+            "inspect_end": 38712
         }
     ],
     [
@@ -246,7 +266,9 @@
             "start": 37581,
             "end": 41651,
             "pallet_id": 37,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 38755,
+            "inspect_end": 39187
         }
     ],
     [
@@ -260,7 +282,9 @@
             "start": 37757,
             "end": 41487,
             "pallet_id": 39,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 39280,
+            "inspect_end": 40220
         }
     ],
     [
@@ -284,7 +308,9 @@
             "start": 10589,
             "end": 40342,
             "pallet_id": 42,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 37547,
+            "inspect_end": 38209
         }
     ],
     [
@@ -332,13 +358,17 @@
             "start": 7784,
             "end": 8999,
             "pallet_id": 49,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 37912,
+            "inspect_end": 38412
         },
         {
             "start": 9001,
             "end": 40117,
             "pallet_id": 50,
-            "pallet_type": 0
+            "pallet_type": "inspection",
+            "inspect_start": 37912,
+            "inspect_end": 38412
         }
     ],
     [
@@ -418,13 +448,17 @@
             "start": 38011,
             "end": 42158,
             "pallet_id": 62,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 39387,
+            "inspect_end": 41532
         },
         {
             "start": 42890,
             "end": 45002,
             "pallet_id": 63,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 44619,
+            "inspect_end": 44982
         }
     ],
     [
@@ -462,7 +496,9 @@
             "start": 37722,
             "end": 45002,
             "pallet_id": 69,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 42355,
+            "inspect_end": 44475
         }
     ],
     [
@@ -494,13 +530,17 @@
             "start": 27494,
             "end": 37909,
             "pallet_id": 74,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36094,
+            "inspect_end": 37207
         },
         {
             "start": 43014,
             "end": 45002,
             "pallet_id": 75,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 43737,
+            "inspect_end": 44764
         }
     ],
     [
@@ -550,13 +590,17 @@
             "start": 36677,
             "end": 39920,
             "pallet_id": 83,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 38335,
+            "inspect_end": 39695
         },
         {
             "start": 41678,
             "end": 45002,
             "pallet_id": 84,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 43847,
+            "inspect_end": 44787
         }
     ],
     [
@@ -606,13 +650,17 @@
             "start": 33128,
             "end": 39308,
             "pallet_id": 92,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 37299,
+            "inspect_end": 39129
         },
         {
             "start": 39543,
             "end": 45002,
             "pallet_id": 93,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 40029,
+            "inspect_end": 44732
         }
     ],
     [
@@ -644,13 +692,17 @@
             "start": 33724,
             "end": 37440,
             "pallet_id": 98,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36009,
+            "inspect_end": 36009
         },
         {
             "start": 37582,
             "end": 45002,
             "pallet_id": 99,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 39655,
+            "inspect_end": 44882
         }
     ],
     [
@@ -688,7 +740,9 @@
             "start": 33531,
             "end": 45002,
             "pallet_id": 105,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36682,
+            "inspect_end": 43309
         }
     ],
     [
@@ -720,13 +774,17 @@
             "start": 30978,
             "end": 38203,
             "pallet_id": 110,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 37047,
+            "inspect_end": 38089
         },
         {
             "start": 41828,
             "end": 45002,
             "pallet_id": 111,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 42174,
+            "inspect_end": 43139
         }
     ],
     [
@@ -746,7 +804,9 @@
             "start": 35277,
             "end": 42125,
             "pallet_id": 114,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 38712,
+            "inspect_end": 42025
         },
         {
             "start": 42137,
@@ -758,7 +818,9 @@
             "start": 43323,
             "end": 45002,
             "pallet_id": 116,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 43624,
+            "inspect_end": 44814
         }
     ],
     [
@@ -802,13 +864,17 @@
             "start": 35951,
             "end": 43104,
             "pallet_id": 123,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 37387,
+            "inspect_end": 42645
         },
         {
             "start": 43422,
             "end": 45002,
             "pallet_id": 124,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 43552,
+            "inspect_end": 43564
         }
     ],
     [
@@ -834,7 +900,9 @@
             "start": 23909,
             "end": 45002,
             "pallet_id": 128,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36802,
+            "inspect_end": 44864
         }
     ],
     [
@@ -854,13 +922,17 @@
             "start": 32509,
             "end": 38392,
             "pallet_id": 131,
-            "pallet_type": 4
+            "pallet_type": "inspection",
+            "inspect_start": 36041,
+            "inspect_end": 36921
         },
         {
             "start": 39679,
             "end": 45002,
             "pallet_id": 132,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 40024,
+            "inspect_end": 43422
         }
     ],
     [
@@ -886,13 +958,17 @@
             "start": 33866,
             "end": 38258,
             "pallet_id": 136,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 36017,
+            "inspect_end": 37027
         },
         {
             "start": 40593,
             "end": 45002,
             "pallet_id": 137,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 41124,
+            "inspect_end": 44207
         }
     ],
     [
@@ -924,13 +1000,17 @@
             "start": 34284,
             "end": 40204,
             "pallet_id": 142,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36109,
+            "inspect_end": 39347
         },
         {
             "start": 40376,
             "end": 45002,
             "pallet_id": 143,
-            "pallet_type": 3
+            "pallet_type": "inspection",
+            "inspect_start": 41087,
+            "inspect_end": 43412
         }
     ],
     [
@@ -968,7 +1048,9 @@
             "start": 34401,
             "end": 45002,
             "pallet_id": 149,
-            "pallet_type": 1
+            "pallet_type": "inspection",
+            "inspect_start": 36187,
+            "inspect_end": 44992
         }
     ],
     [
