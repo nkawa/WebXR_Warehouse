@@ -123,6 +123,8 @@ AFRAME.registerComponent("pallets", {
 
             // 事前に3D 用意するの、、、むずかしいかも。
             // なので、あえて用意せずにやってみる。。。
+            // 移動経路毎にもオブジェクトを用意
+            this.ptrace=[];
             
         }catch(err){
             console.log("pallet track fetch error",err);
@@ -178,6 +180,9 @@ AFRAME.registerComponent("pallets", {
                         obj.setAttribute("position",`${xy[0]} 0.4 ${xy[1]}`);
                         this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録
 
+                        track_obj = this.ptrack[pinfo.track_id] 
+
+
                     }else{// 無いので作る
                         var obj = document.createElement("a-box");
                         const xy = conv_global_to_local_xy(pinfo.bbox[0]+pinfo.bbox[2]/2,pinfo.bbox[1]+pinfo.bbox[3]/2);
@@ -192,6 +197,9 @@ AFRAME.registerComponent("pallets", {
                         this.ptobj[pinfo.track_id] = obj;
                         this.ptstate[pinfo.track_id] = frm; // 表示したフレームを記録//
  //                       console.log("New PalletMove",pinfo.track_id, xy);
+
+                        // 移動経路も表示
+                        const track_obj = document.createElement("a-entity");
                     }
 
                 })

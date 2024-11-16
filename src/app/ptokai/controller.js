@@ -1,6 +1,8 @@
 "use client";
 import * as React from 'react'
 import "./controller.css";
+import WorkerStats from '../../components/WorkerStats';
+
 
 export default function Controller(props) {
   const {c_pos_x, c_pos_y, c_pos_z} = props
@@ -9,6 +11,8 @@ export default function Controller(props) {
   const {disp_mode, set_disp_mode, frame_step, set_frame_step} = props
   const {ptrace_mode, set_ptrace_mode} = props;
   const {label_mode, set_label_mode, worker_mode,set_worker_mode} = props;
+  const {worker_disp, set_worker_disp, worker_stat, set_worker_stat} = props;
+  const {set_select_id} = props;
 
   const set_c_pos_x = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -72,6 +76,10 @@ export default function Controller(props) {
   const change_worker_mode  = (e)=>{
     set_worker_mode(e.target.checked);
   }
+
+  const change_worker_disp  = (e)=>{
+    set_worker_disp(e.target.checked);
+  }
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
     let hour = Math.floor(sec / 3600);
@@ -91,6 +99,7 @@ export default function Controller(props) {
 
   return (
     <>
+
       <div className="controller" >
         <div className="row mb-0">
           <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">Cur Frame</span></label></div>
@@ -101,6 +110,7 @@ export default function Controller(props) {
           <div className="col-md-2">
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={label_mode} onChange={change_label_mode}/> Label</label> 
+            <label><input type="checkbox" className="form-center-control" id="label_work" checked={worker_disp} onChange={change_worker_disp}/> Stats</label>
           </div>
           <div className="col-md-2">
             <label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
@@ -109,27 +119,15 @@ export default function Controller(props) {
         </div>
 
       </div>
-      {/*
-      <div className="camera-controller" >
-        <span>CAMERA</span>
-        <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="c_pos_x_number" className="form-label"><span className="form-control-plaintext">pos X</span></label></div>
-          <div className="col-md-8"><input type="number" className="form-control" id="c_pos_x_number" value={c_pos_x} onChange={set_c_pos_x} step={0.01}/></div>
-        </div>
-        <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="c_pos_y_number" className="form-label"><span className="form-control-plaintext">pos Y</span></label></div>
-          <div className="col-md-8"><input type="number" className="form-control" id="c_pos_y_number" value={c_pos_y} onChange={set_c_pos_y} step={0.01}/></div>
-        </div>
-        <div className="row mb-2">
-          <div className="col-md-4"><label htmlFor="c_pos_z_number" className="form-label"><span className="form-control-plaintext">pos Z</span></label></div>
-          <div className="col-md-8"><input type="number" className="form-control" id="c_pos_z_number" value={c_pos_z} onChange={set_c_pos_z} step={0.01}/></div>
-        </div>
-        <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="c_deg_x_number" className="form-label"><span className="form-control-plaintext">deg X</span></label></div>
-          <div className="col-md-8"><input type="number" className="form-control" id="c_deg_x_number" value={c_deg_x} onChange={set_c_deg_x} step={0.1}/></div>
-        </div
-      </div>>
-        */}
+      
+      { 
+      (worker_disp)? 
+      <div className="worker-list" >
+        <WorkerStats workers={worker_stat} set_select_id={set_select_id}/>
+      </div>
+      : <></>      
+      }
+
       <div className="frame-controller" >
         <div className="row mb-0">
           <div className="col-md-12">
@@ -142,6 +140,7 @@ export default function Controller(props) {
                 className="xr-input-range-sm" id="frame" />
           </div>
       </div>
+
     </>
     )
 }

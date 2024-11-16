@@ -14,7 +14,7 @@ export default function Page() {
       if (id == "0") {
           window.location.replace('/ptokai'); // goto second!
       } else if (id == '2') {
-          window.location.replace('/stat'); // goto second!
+          window.location.replace('/ptokai1112'); // goto second!
       } else if (id == '3') {
           window.location.replace('/virtual'); // goto third!
       }
@@ -31,8 +31,8 @@ export default function Page() {
   
       }
       const data = [
+        { "title": "プラネット東海", "datetime": "2024年10月03日 7時-12時" },
         { "title": "プラネット東海", "datetime": "2024年10月03日 11時-12時" },
-        { "title": "プラネット東海", "datetime": "2024年10月03日 7時-11時" },
         { "title": "P東海上空視点", "datetime": "" },
         { "title": "仮想倉庫", "datetime": "" },
         { "title": "統計データ", "datetime": "" }

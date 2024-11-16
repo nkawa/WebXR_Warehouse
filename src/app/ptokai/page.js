@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import Controller from './controller.js';
 
+import { load_workers } from './load_worker_stat.js';
 
 //import '../../vendor/button-wasd-controls.css';
 
@@ -26,10 +27,14 @@ export default function Page() {
     const [ptrace_mode,set_ptrace_mode] = React.useState(false);
     const [label_mode, set_label_mode] = React.useState(true);
     const [worker_mode, set_worker_mode] = React.useState(true);
+    const [worker_disp, set_worker_disp] = React.useState(true);
+    const [worker_stat, set_worker_stat] = React.useState([]);
 
     const [cur_frame, set_cur_frame] = React.useState(0);
     const [max_frame, set_max_frame] = React.useState(9000*5);//(5hour)
     const [interval_id, set_interval_id] = React.useState(null);
+
+    const [select_id, set_select_id] = React.useState(-1);
     
     const add_image = () => {
         const img = document.createElement("a-image");
@@ -54,9 +59,19 @@ export default function Page() {
         }
     }
 
+    const update_worker_state = (fnum) => {
+// ワーカの状態を更新したい
+
+    }
+
     const tick = () => {
         set_frame_step((fsp)=>{
-            set_cur_frame((f)=>(f < 45000)?f+fsp:0);
+            set_cur_frame((f)=>{
+                const next = (f < 45000)?f+fsp:0;
+                // worker stat などもここで更新！
+                // update_worker_state(next);
+                return next;
+            });
             return fsp;
         });
     }
@@ -124,15 +139,24 @@ export default function Page() {
             require('./boxObjects.js'); // A-Frame pallets
             require('./workerObjects.js'); // A-Frame workers
             require('../../components/camera-move-notify');// カメラ移動通知
-/*
+//            require('./load_worker_stat');// データ読み込み
+            
+            console.log("Load worker stat")
+            const stat_data = load_workers();
+            console.log("Stat data",stat_data);
+            stat_data.then((data)=>{
+                console.log("promised data",stat_data);
+                set_worker_stat(data);
+            });
+    /*
             const scene = document.querySelector("a-scene");
             const palcomp = document.createElement("a-entity");
             palcomp.setAttribute("pallets", {frame:cur_frame});
             scene.appendChild(palcomp);
-*/
+*/  
 
+            set_control_buttons();
         }
-        set_control_buttons();
 //        checkGLsize();
     }, [window]);
 
@@ -161,7 +185,8 @@ export default function Page() {
         c_deg_x,set_c_deg_x,c_deg_y,set_c_deg_y,c_deg_z,set_c_deg_z,
         disp_mode,set_disp_mode, frame_step, set_frame_step,
         ptrace_mode,set_ptrace_mode,
-        label_mode, set_label_mode, worker_mode,set_worker_mode
+        label_mode, set_label_mode, worker_mode,set_worker_mode,
+        worker_disp, set_worker_disp,worker_stat, set_worker_stat, select_id, set_select_id
     }
 
     return (

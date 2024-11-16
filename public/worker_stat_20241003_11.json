@@ -1,0 +1,254 @@
+[
+    {
+        "id": 0,
+        "workTimes": {
+            "inspect": 50.1,
+            "transport": 7.32,
+            "sorting": 2.58
+        },
+        "distance": 661
+    },
+    {
+        "id": 1,
+        "workTimes": {
+            "inspect": 45.6,
+            "transport": 13.92,
+            "sorting": 0.48
+        },
+        "distance": 1091
+    },
+    {
+        "id": 2,
+        "workTimes": {
+            "inspect": 39.54,
+            "transport": 12.12,
+            "sorting": 8.34
+        },
+        "distance": 811
+    },
+    {
+        "id": 3,
+        "workTimes": {
+            "inspect": 51.6,
+            "transport": 6.96,
+            "sorting": 1.44
+        },
+        "distance": 743
+    },
+    {
+        "id": 4,
+        "workTimes": {
+            "inspect": 43.74,
+            "transport": 9.18,
+            "sorting": 7.08
+        },
+        "distance": 870
+    },
+    {
+        "id": 5,
+        "workTimes": {
+            "inspect": 41.52,
+            "transport": 11.58,
+            "sorting": 6.9
+        },
+        "distance": 799
+    },
+    {
+        "id": 6,
+        "workTimes": {
+            "inspect": 49.92,
+            "transport": 5.1,
+            "sorting": 4.98
+        },
+        "distance": 579
+    },
+    {
+        "id": 7,
+        "workTimes": {
+            "inspect": 44.4,
+            "transport": 10.62,
+            "sorting": 4.98
+        },
+        "distance": 783
+    },
+    {
+        "id": 8,
+        "workTimes": {
+            "inspect": 35.64,
+            "transport": 16.68,
+            "sorting": 7.62
+        },
+        "distance": 951
+    },
+    {
+        "id": 9,
+        "workTimes": {
+            "inspect": 34.02,
+            "transport": 19.5,
+            "sorting": 6.48
+        },
+        "distance": 1331
+    },
+    {
+        "id": 10,
+        "workTimes": {
+            "inspect": 13.08,
+            "transport": 43.32,
+            "sorting": 3.6
+        },
+        "distance": 1156
+    },
+    {
+        "id": 11,
+        "workTimes": {
+            "inspect": 39.72,
+            "transport": 11.28,
+            "sorting": 9.0
+        },
+        "distance": 703
+    },
+    {
+        "id": 13,
+        "workTimes": {
+            "inspect": 22.08,
+            "transport": 22.38,
+            "sorting": 15.54
+        },
+        "distance": 601
+    },
+    {
+        "id": 16,
+        "workTimes": {
+            "inspect": 14.22,
+            "transport": 40.14,
+            "sorting": 5.7
+        },
+        "distance": 686
+    },
+    {
+        "id": 17,
+        "workTimes": {
+            "inspect": 42.3,
+            "transport": 13.56,
+            "sorting": 4.14
+        },
+        "distance": 668
+    },
+    {
+        "id": 19,
+        "workTimes": {
+            "inspect": 41.04,
+            "transport": 11.34,
+            "sorting": 7.62
+        },
+        "distance": 811
+    },
+    {
+        "id": 20,
+        "workTimes": {
+            "inspect": 48.66,
+            "transport": 8.28,
+            "sorting": 3.06
+        },
+        "distance": 659
+    },
+    {
+        "id": 23,
+        "workTimes": {
+            "inspect": 16.14,
+            "transport": 42.66,
+            "sorting": 1.2
+        },
+        "distance": 1086
+    },
+    {
+        "id": 24,
+        "workTimes": {
+            "inspect": 36.06,
+            "transport": 9.9,
+            "sorting": 14.04
+        },
+        "distance": 744
+    },
+    {
+        "id": 25,
+        "workTimes": {
+            "inspect": 41.88,
+            "transport": 10.86,
+            "sorting": 7.32
+        },
+        "distance": 834
+    },
+    {
+        "id": 27,
+        "workTimes": {
+            "inspect": 18.24,
+            "transport": 29.52,
+            "sorting": 12.24
+        },
+        "distance": 1177
+    },
+    {
+        "id": 32,
+        "workTimes": {
+            "inspect": 46.74,
+            "transport": 6.42,
+            "sorting": 6.9
+        },
+        "distance": 713
+    },
+    {
+        "id": 33,
+        "workTimes": {
+            "inspect": 45.6,
+            "transport": 12.0,
+            "sorting": 2.4
+        },
+        "distance": 896
+    },
+    {
+        "id": 34,
+        "workTimes": {
+            "inspect": 40.38,
+            "transport": 8.4,
+            "sorting": 11.16
+        },
+        "distance": 743
+    },
+    {
+        "id": 35,
+        "workTimes": {
+            "inspect": 14.34,
+            "transport": 10.32,
+            "sorting": 35.34
+        },
+        "distance": 993
+    },
+    {
+        "id": 36,
+        "workTimes": {
+            "inspect": 49.38,
+            "transport": 5.88,
+            "sorting": 4.8
+        },
+        "distance": 667
+    },
+    {
+        "id": 37,
+        "workTimes": {
+            "inspect": 28.8,
+            "transport": 9.42,
+            "sorting": 21.84
+        },
+        "distance": 988
+    },
+    {
+        "id": 38,
+        "workTimes": {
+            "inspect": 47.28,
+            "transport": 11.16,
+            "sorting": 1.56
+        },
+        "distance": 800
+    }
+]
