@@ -23,13 +23,18 @@ export default function Page() {
     const [task_label, set_task_label] = React.useState(true);
     const [worker_mode, set_worker_mode] = React.useState(true);
     const [worker_disp, set_worker_disp] = React.useState(true);
-    const [worker_stat, set_worker_stat] = React.useState([]);
+    const [worker_stat, set_worker_stat] = React.useState([]); // 作業者の統計情報
+    const [pstat_disp, set_pstat_disp] = React.useState(false); // パレットの統計情報を表示するか
+    const [pallet_stat, set_pallet_stat] = React.useState([]); // パレットの統計情報
     const [min_frame, set_min_frame] = React.useState(9000*4); // 11:00-
     const [cur_frame, set_cur_frame] = React.useState(9000*4); // 11:00-
     const [max_frame, set_max_frame] = React.useState(9000*5);//(5hour)
     const [interval_id, set_interval_id] = React.useState(null);
-
     const [select_id, set_select_id] = React.useState(-1);
+    const [select_pid, set_select_pid] = React.useState(-1);
+
+    const pstatRef = React.useRef(null);
+
     
     const add_image = () => {
         const img = document.createElement("a-image");
@@ -122,10 +127,20 @@ export default function Page() {
         playButton.addEventListener("click", play_button_listener);
 
     }
+    const handlePstatEvent = (e) => {
+//        console.log("Got Pstat Event!", e.detail.length);
+        set_pallet_stat(e.detail);
+    }
     
     // 初回のみ実行
     React.useEffect(() => {
         if (typeof window !== "undefined") {
+            // pstatRef を使って、boxObjects からパレットの統計情報を取得する
+            const pstatEl = pstatRef.current;
+//            console.log("PstatEl",pstatEl);
+            if (pstatEl){
+                pstatEl.addEventListener("pallet_stats",handlePstatEvent);
+            }
             require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
             require('aframe-troika-text');
             require('../../components/aframe-gui');
@@ -138,49 +153,49 @@ export default function Page() {
             
             console.log("Load worker stat")
             const stat_data = load_workers();
-            console.log("Stat data",stat_data);
+//            console.log("Stat data",stat_data);
             stat_data.then((data)=>{
 //                console.log("promised data",stat_data);
                 set_worker_stat(data);
             });
-    /*
-            const scene = document.querySelector("a-scene");
-            const palcomp = document.createElement("a-entity");
-            palcomp.setAttribute("pallets", {frame:cur_frame});
-            scene.appendChild(palcomp);
-*/  
+
+
 
             set_control_buttons();
+
+            return ()=>{
+                if(pstatEl){
+                    pstatEl.removeEventListener("pallet_stat", handlePstatEvent);
+                }
+            }
         }
 //        checkGLsize();
     }, []);
 
 
     // フレーム情報が変化した場合に実行
-    React.useEffect(()=>{
-        const wor = document.getElementById("workers_el");
-        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode});
-    },[cur_frame]);
 
-    React.useEffect(()=>{
-        const palcomp = document.getElementById("pallets_el");
-        palcomp.setAttribute("pallets", {frame:cur_frame, mode:disp_mode});
-        const wor = document.getElementById("workers_el");
-        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode});
-    },[disp_mode]);
+
 
     React.useEffect(()=>{
         const wor = document.getElementById("workers_el");
-        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode, task: task_label, worker:worker_mode});
-    },[label_mode, worker_mode, task_label]);
+        wor.setAttribute("workers", {frame:cur_frame, mode:disp_mode, label:label_mode, task: task_label, worker:worker_mode, select_id:select_id});
+    },[cur_frame,disp_mode,label_mode, worker_mode, task_label, select_id]);
+
+    React.useEffect(()=>{
+        const wor = document.getElementById("pallets_el");
+        wor.setAttribute("pallets", {frame:cur_frame, mode:disp_mode, ptrace: ptrace_mode, select_pid:select_pid});
+    },[ cur_frame,disp_mode,select_pid]);
+
 
     const controllerProps = {
         cur_frame,set_cur_frame,max_frame,set_max_frame,
         min_frame, task_label, set_task_label,
         disp_mode,set_disp_mode, frame_step, set_frame_step,
-        ptrace_mode,set_ptrace_mode,
-        label_mode, set_label_mode, worker_mode,set_worker_mode,
-        worker_disp, set_worker_disp,worker_stat, set_worker_stat, select_id, set_select_id
+        ptrace_mode,set_ptrace_mode,pstat_disp, set_pstat_disp,
+        label_mode, set_label_mode, worker_mode,set_worker_mode,pallet_stat,
+        worker_disp, set_worker_disp,worker_stat, set_worker_stat, select_id, set_select_id,
+        select_pid, set_select_pid
     }
 
     return (
@@ -226,7 +241,7 @@ export default function Page() {
                 <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: [gui-interactable]"></a-entity>
                 
 
-                <a-entity id="pallets_el" pallets={"frame:"+cur_frame}>  </a-entity>
+                <a-entity id="pallets_el" pallets={"frame:"+cur_frame} ref={pstatRef}>  </a-entity>
 
                 <a-entity id="workers_el" workers={"frame:"+cur_frame}>  </a-entity>
 

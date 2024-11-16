@@ -25,8 +25,9 @@ const conv_global_to_local_xy = (x,y) => {
 }
 
 // 枠の描画
-const draw_box =(box_info) =>{
+const draw_box =(box_info,parent) =>{
     const scene = document.querySelector("a-scene");
+    parent.box_obj=[];
     for (let i = 0; i < box_info.length; i++) {
         const box = document.createElement("a-plane");
         box.setAttribute("width", "0.9");
@@ -40,8 +41,10 @@ const draw_box =(box_info) =>{
         box.setAttribute("wireframe", "true");
         box.setAttribute("wireframe-linewidth", "0.6");
         scene.appendChild(box);
+        parent.box_obj[i] = box;
 //            console.log("Draw Box",box_info[i].x,box_info[i].y);
     }
+    console.log("Draw Box",parent.box_obj.length);
 }
 
 AFRAME.registerComponent("pallets", {
@@ -49,6 +52,7 @@ AFRAME.registerComponent("pallets", {
         frame: {type: 'int', default: 0},
         mode: {type: 'string', default: 'None'},
         ptrace: {type: 'boolean', default: true}, // パレットの移動経路を表示するかどうか
+        select_pid: {type: 'int', default: -1},
     },
   
     init: async function () {
@@ -60,7 +64,7 @@ AFRAME.registerComponent("pallets", {
             this.box_info = await res.json();
             console.log("Load Box ", this.box_info.length);
 
-            draw_box(this.box_info);
+            draw_box(this.box_info,this);
         }catch(err){
             console.log("box fetch error",err);
         }
@@ -91,6 +95,7 @@ AFRAME.registerComponent("pallets", {
             // 各パレットの初期位置を設定
             // pallets はbox の数だけあって、各pallet の中は、 start/end がある。
             // visible/invisible の制御でいきたい
+
             this.pallets.forEach((pallet, index) => {
 //                console.log("Working for",index);
                 pallet.forEach((box, idx) => {                    
@@ -102,7 +107,7 @@ AFRAME.registerComponent("pallets", {
                     obj.setAttribute("depth",1);
                     if ("inspect_start" in box){
                         const mycolor = this.pcolor(this.data.frame, box.start, box.end, box.inspect_start, box.inspect_end);
-                        console.log("IColor ", box.start, box.end, box.inspect_start, box.inspect_end,mycolor);
+//                        console.log("IColor ", box.start, box.end, box.inspect_start, box.inspect_end,mycolor);
                         obj.setAttribute("color",mycolor);// 色でモードを表現したい！（本当は　inspect されていない時間を表現したい)
                         
                     }else{
@@ -117,7 +122,7 @@ AFRAME.registerComponent("pallets", {
                     }
 
                     scene.appendChild(obj);
-                    const myobj = {"start":box.start, "end": box.end, "obj":obj, "height":idx};
+                    const myobj = {"start":box.start, "end": box.end, "obj":obj, "height":idx, "id":index+1};
                     if (typeof box.inspect_start !== "undefined"){
                         myobj.pallet_type = box.pallet_type;
                         myobj.inspect_start = box.inspect_start;
@@ -125,7 +130,14 @@ AFRAME.registerComponent("pallets", {
                     }
                     this.pobj.push(myobj);
                 });
+            
+
             });
+
+            this.gen_pallet_stat();
+
+            this.selected_pid = -1;
+
         }catch(err){
             console.log("pallet fetch error",err); 
         }
@@ -157,6 +169,24 @@ AFRAME.registerComponent("pallets", {
 
 
 
+    },
+
+    gen_pallet_stat: function (){
+           // pallet_stat を作成！
+           const pstat = [];
+           this.pobj.forEach((pinfo) => {
+               if (this.data.frame >= pinfo.start && this.data.frame <= pinfo.end){
+                   if ("inspect_start" in pinfo){
+                       const arrive = (pinfo.inspect_start - pinfo.start)/2.5/60;// conver to min
+                       const inspect = (pinfo.inspect_end - pinfo.inspect_start)/2.5/60;
+                       const transport = (pinfo.end - pinfo.inspect_end)/2.5/60;
+                       pstat.push({"id":pinfo.id, "workTimes": {"arrive":arrive, "inspect":inspect, "transport":transport}});
+                   }
+               }
+           });
+           console.log("Pallet Stats",pstat.length);
+           const pstEvent = new CustomEvent("pallet_stats", {detail: pstat});
+           this.el.dispatchEvent(pstEvent);
     },
   
     tick: function (time, delta) {
@@ -195,6 +225,26 @@ AFRAME.registerComponent("pallets", {
         if (this.pobj === undefined) return;
 //        console.log("Pallet", this.data.mode);
 
+        if (this.data.select_pid != this.selected_pid){// 変化があった場合
+            if (this.selected_pid != -1){
+                this.box_obj[this.selected_pid].setAttribute("wireframe", "true");
+                this.box_obj[this.selected_pid].setAttribute("color","#77ffdd"); // 元の色
+                this.box_obj[this.selected_pid].setAttribute("width", "0.9");
+                this.box_obj[this.selected_pid].setAttribute("height", "0.9");
+        
+
+            }
+            if (this.data.select_pid != -1){
+//                console.log("Select",this.data.select_pid, typeof this.data.select_pid, this.box_obj);
+                this.box_obj[this.data.select_pid].setAttribute("color","#ff0000"); //赤枠
+                this.box_obj[this.data.select_pid].setAttribute("wireframe", "false");
+                this.box_obj[this.data.select_pid].setAttribute("width", "1.1");
+                this.box_obj[this.data.select_pid].setAttribute("height", "1.1");
+            }
+            this.selected_pid = this.data.select_pid;
+        }
+
+
 //   box 毎の表示方法
         if( this.data.mode =="None"){
             this.pobj.forEach((pinfo) => {
@@ -211,7 +261,9 @@ AFRAME.registerComponent("pallets", {
                 }else{
                     pinfo.obj.setAttribute("visible",false);
                 }
+                
             })
+            this.gen_pallet_stat(); // 毎回実行したくないけど。。。まあしかたない？
         }else{
             this.pobj.forEach((pinfo) => {
                 if( pinfo.start <= this.data.frame){                    

@@ -2,7 +2,7 @@
 import * as React from 'react'
 import "./controller.css";
 import WorkerStats from '../../components/WorkerStats';
-
+import PalletStats from '../../components/PalletStats';
 
 export default function Controller(props) {
   const {min_frame} = props
@@ -11,43 +11,13 @@ export default function Controller(props) {
   const {ptrace_mode, set_ptrace_mode} = props;
   const {label_mode, set_label_mode, worker_mode,set_worker_mode, task_label, set_task_label} = props;
   const {worker_disp, set_worker_disp, worker_stat, set_worker_stat} = props;
-  const {set_select_id} = props;
-
-  const set_c_pos_x = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_pos_x(value)
-  }
-
-  const set_c_pos_y = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_pos_y(value)
-  }
-
-  const set_c_pos_z = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_pos_z(value)
-  }
-
-  const set_c_deg_x = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_deg_x(value)
-  }
-
-  const set_c_deg_y = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_deg_y(value)
-  }
-
-  const set_c_deg_z = (e)=>{
-    let value = Number.parseFloat(e.target.value || 0)
-    props.set_c_deg_z(value)
-  }
+  const {select_id,set_select_id,select_pid, set_select_pid, pstat_disp, set_pstat_disp} = props;
+  const {pallet_stat} = props;
 
   const on_set_cur_frame = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
     props.set_cur_frame(value)
   }
-
 
   const on_set_frame_step = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -82,6 +52,11 @@ export default function Controller(props) {
   const change_worker_disp  = (e)=>{
     set_worker_disp(e.target.checked);
   }
+
+  const change_pstat_disp  = (e)=>{
+    set_pstat_disp(e.target.checked);
+  }
+
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
     let hour = Math.floor(sec / 3600);
@@ -119,6 +94,8 @@ export default function Controller(props) {
           <div className="col-md-2">
             <label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
             <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
+            <br/>
+            <label><input type="checkbox" className="form-center-control" id="label_work" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats</label>
           </div>
         </div>
 
@@ -127,9 +104,21 @@ export default function Controller(props) {
       { 
       (worker_disp)? 
       <div className="worker-list" >
-        <WorkerStats workers={worker_stat} set_select_id={set_select_id}/>
+        <WorkerStats workers={worker_stat} set_select_id={set_select_id} select_id={select_id}/>
       </div>
       : <></>      
+      }
+
+      {
+        (pstat_disp)?(
+         (worker_disp)?
+          <div className="pstat-center-list" >
+            <PalletStats pallets={pallet_stat} set_select_pid={set_select_pid} select_pid={select_pid}/>
+         </div>:
+          <div className="pstat-list" >
+            <PalletStats pallets={pallet_stat} set_select_pid={set_select_pid} select_pid={select_pid}/>
+        </div>):
+        <></>
       }
 
       <div className="frame-controller" >

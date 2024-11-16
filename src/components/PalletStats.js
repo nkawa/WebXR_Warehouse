@@ -3,58 +3,56 @@ import React ,  { useState } from "react";
 
 
 
-const WorkerStats = (props) => {
-    const workers = props.workers;
-    const set_select_id = props.set_select_id;
+const PalletStats = (props) => {
+    const set_select_pid = props.set_select_pid;
+
+    const pallets = props.pallets;
 
     const [sortType, setSortType] = useState('id');
     const [sortDirection, setSortDirection] = useState('asc');
     const [hoveredRow, setHoveredRow] = useState(null);
 
+    /*
     const initialData = Array.from({ length: 30 }, (_, index) => ({
       id: index + 1,
       workTimes: {
-        planning: Math.random() * 2 + 0.5,
-        development: Math.random() * 4 + 2,
-        testing: Math.random() * 2 + 0.5
+        arrive: Math.random() * 2 + 0.5,
+        inspect: Math.random() * 4 + 2,
+        transport: Math.random() * 2 + 0.5
       }
     }));
+*/
+//    const pallets = initialData;
 
-    React.useEffect(() =>{
-      set_select_id(-1); // これで選択解除
-    },[sortType]);
-
-    const workTypes = [
-        { key: "inspect", label: "検品", color:  "rgb(101, 116, 147)"},
-        { key: "transport", label: "搬送", color: "rgb(216, 101, 96)" },
-        { key: "sorting", label: "仕訳", color: "rgb(143, 186, 155)" },
+    const stateTypes = [
+      { key: "arrive", label: "着荷", color:  "rgb(101, 116, 147)"},
+      { key: "inspect", label: "検品", color:  "rgb(101, 170, 140)"},
+        { key: "transport", label: "待ち", color: "rgb(216, 101, 96)" },
+//        { key: "sorting", label: "仕訳", color: "rgb(143, 186, 155)" },
       ];
-/*    
-    const workTypes = [
-      { key: 'planning', label: '計', color: 'rgb(96, 165, 250)' },
-      { key: 'development', label: '開', color: 'rgb(74, 222, 128)' },
-      { key: 'testing', label: 'テ', color: 'rgb(192, 132, 252)' }
-    ];
-  */
+
     const getTotalTime = (workTimes) => {
       return Object.values(workTimes).reduce((sum, time) => sum + time, 0);
     };
-  
+
+    React.useEffect(() =>{
+      set_select_pid(-1); // これで選択解除
+    },[sortType]);
+
     const sortData = (data) => {
+      if (data.length === 0) return [];
       return [...data].sort((a, b) => {
         let comparison = 0;
         if (sortType === 'id') {
           comparison = a.id - b.id;
         } else if (sortType === 'total') {
-          comparison = getTotalTime(a.workTimes) - getTotalTime(b.workTimes);
-        }else if (sortType === 'distance') {
-            comparison = a.distance- b.distance;
+          comparison = getTotalTime(a.workTimes) - getTotalTime(b.workTimes);        
         }else if (sortType === 'inspect') {
             comparison = a.workTimes.inspect - b.workTimes.inspect;
         }else if (sortType === 'transport') {
             comparison = a.workTimes.transport - b.workTimes.transport;
-        }else if (sortType === 'sorting') {
-            comparison = a.workTimes.sorting - b.workTimes.sorting; 
+        }else if (sortType === 'arrive') {
+            comparison = a.workTimes.arrive - b.workTimes.arrive; 
           }
         return sortDirection === 'asc' ? comparison : -comparison;
       });
@@ -71,7 +69,7 @@ const WorkerStats = (props) => {
 
     
   
-    const sortedData = sortData(workers);
+    const sortedData = sortData(pallets);
     const maxTotalTime = Math.max(...sortedData.map(item => getTotalTime(item.workTimes)));
   
     const SortButton = ({ type, label }) => {
@@ -113,10 +111,10 @@ const WorkerStats = (props) => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
             <SortButton type="id" label="ID" />
-            <SortButton type="distance" label="距" />
+            <SortButton type="total" label="合" />
+            <SortButton type="arrive" label="着" />
             <SortButton type="inspect" label="検" />
-            <SortButton type="transport" label="搬" />
-            <SortButton type="sorting" label="仕" />
+            <SortButton type="transport" label="待" />
           </div>
           <div style={{ 
             display: 'flex', 
@@ -124,7 +122,7 @@ const WorkerStats = (props) => {
             borderLeft: '1px solid #cbd5e1',
             paddingLeft: '8px'
           }}>
-            {workTypes.map(type => (
+            {stateTypes.map(type => (
               <div key={type.key} style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                 <div 
                   style={{ 
@@ -143,28 +141,29 @@ const WorkerStats = (props) => {
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>{/*</tr> style={{ borderBottom: '1px solid #eee' }}>*/}
-              <th style={{ padding: '2px', textAlign: 'center', width: '20px' }}>ID</th>
-              <th style={{ padding: '2px', textAlign: 'left', width: '48px' }}>移動距離</th>
-              <th style={{ padding: '2px', textAlign: 'left' }}>作業内訳（１時間中の推定値）</th>
+              <th style={{ padding: '2px', textAlign: 'center', width: '26px' }}>枠番</th>
+              <th style={{ padding: '2px', textAlign: 'center', width: '38px' }}>合計</th>
+              <th style={{ padding: '2px', textAlign: 'left' }}>時間内訳</th>
             </tr>
           </thead>
           <tbody>
             {sortedData.map((item) => {
-            // const totalTime = getTotalTime(item.workTimes);
-              const distance = item.distance;
+              const totalTime = getTotalTime(item.workTimes);
+             // const distance = item.distance;
               const isHovered = hoveredRow === item.id;
-              const is_selected = item.id === props.select_id;
+              const is_selected = item.id === props.select_pid;
+
               return (
                 <tr 
                     key={item.id} 
-                    onClick={()=>set_select_id(item.id)}
+                    onClick={()=>set_select_pid(item.id)}
                     onMouseEnter={() => setHoveredRow(item.id)}
                     onMouseLeave={() => setHoveredRow(null)}
                     style={{ 
-                        backgroundColor: isHovered?'#353575':(is_selected? '#252565':'transparent')
+                        backgroundColor: isHovered?'#353575':(is_selected? '#252565':'transparent'),
                     }}>
                   <td style={{ padding: '0px 2px', textAlign:'right'}}>{item.id}</td>
-                  <td style={{ padding: '0px 2px', textAlign:'right'}}>{distance.toFixed(0)}m</td>
+                  <td style={{ padding: '0px 2px', textAlign:'right'}}>{totalTime.toFixed(0)}分</td>
                   <td style={{ padding: '0px 2px' }}>
                     <div style={{ 
                       position: 'relative', 
@@ -173,7 +172,7 @@ const WorkerStats = (props) => {
                       backgroundColor: '#f5f5f5',
                       borderRadius: '2px'
                     }}>
-                      {workTypes.reduce((acc, type, index) => {
+                      {stateTypes.reduce((acc, type, index) => {
                         const prevWidth = acc.width;
                         const width = (item.workTimes[type.key] / maxTotalTime) * 100;
                         
@@ -190,7 +189,7 @@ const WorkerStats = (props) => {
                                   height: '14px',
                                   backgroundColor: type.color,
                                   transition: 'all 0.3s',
-                                  borderRadius: index === workTypes.length - 1 ? '0 2px 2px 0' : '0',
+                                  borderRadius: index === stateTypes.length - 1 ? '0 2px 2px 0' : '0',
                                   borderTopLeftRadius: index === 0 ? '2px' : '0',
                                   borderBottomLeftRadius: index === 0 ? '2px' : '0',
                                   display: 'flex',
@@ -221,4 +220,4 @@ const WorkerStats = (props) => {
 };
 
 
-export default WorkerStats;
+export default PalletStats;

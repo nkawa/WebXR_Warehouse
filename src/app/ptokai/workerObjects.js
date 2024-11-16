@@ -68,7 +68,9 @@ AFRAME.registerComponent("workers", {
     frame: { type: "int", default: 0 },
     mode: { type: "string", default: "None" },
     worker: { type: "boolean", default: true },
-    label: { type: "boolean", default: true },
+    label: { type: "boolean", default: true },  // 通常ラベル
+    task: { type: "boolean", default: true },   // タスクラベル
+    select_id: {type: 'int', default: -1},
   },
 
   init: async function () {
@@ -112,6 +114,9 @@ AFRAME.registerComponent("workers", {
         hud.appendChild(textObj);
         this.textObjs.push(textObj);
       }
+
+      this.selected_id = -1;
+
       console.log("Worker Object Added", this.wobj.length);
     } catch (err) {
       console.log("worker fetch error", err);
@@ -190,6 +195,22 @@ AFRAME.registerComponent("workers", {
   update: function (oldData) {
     if (this.wobj === undefined) return;
     //        console.log("Pllet", this.data.mode);
+
+    if (this.data.select_id != this.selected_id){// 変化があった場合
+      if (this.selected_id != -1){
+          this.wobj[this.selected_id].obj.setAttribute("color", worker_colors[this.selected_id]);
+          this.wobj[this.selected_id].obj.setAttribute("height", 1.6);
+          this.wobj[this.selected_id].obj.setAttribute("radius", 0.3);
+      }
+      if (this.data.select_pid != -1){
+//                console.log("Select",this.data.select_pid, typeof this.data.select_pid, this.box_obj);
+          this.wobj[this.data.select_id].obj.setAttribute("color", "#FF0000");
+          this.wobj[this.data.select_id].obj.setAttribute("height", 3.5);
+          this.wobj[this.data.select_id].obj.setAttribute("radius", 0.8);
+      }
+      this.selected_id = this.data.select_id;
+  }
+
 
     if (this.data.mode == "None") {
       const frm = this.data.frame % 4500; // 11:00 は 36000から
