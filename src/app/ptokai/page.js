@@ -17,19 +17,22 @@ import PalletInfoDisp from '../../components/PalletInfoDisp';
 
 export default function Page() {
 
-
     const [disp_mode, set_disp_mode] = React.useState("None")
     const [frame_step, set_frame_step] = React.useState(1)
     const [interval_time, set_interval_time] = React.useState(60); // インターバル時刻
     const [min_mode, set_min_mode] = React.useState(true); // チェックで　11:00- 外すと7:00-
-    const [ptrace_mode, set_ptrace_mode] = React.useState(false);
     const [label_mode, set_label_mode] = React.useState(true);
     const [task_label, set_task_label] = React.useState(false);
     const [worker_mode, set_worker_mode] = React.useState(true);
-    const [worker_disp, set_worker_disp] = React.useState(true);
+    const [worker_disp, set_worker_disp] = React.useState(false);//作業者の統計パネルを出すか出さないか
     const [worker_stat, set_worker_stat] = React.useState([]); // 作業者の統計情報
+    const [pallet_disp, set_pallet_disp] = React.useState(true); // パレットを表示するかどうか
+    const [ptrace_mode, set_ptrace_mode] = React.useState(false);
+    const [pinfo_disp, set_pinfo_disp] = React.useState(false); // パレット個別情報を表示するか
+    const [pallet_info, set_pallet_info] = React.useState([]); // パレット毎の情報
     const [pstat_disp, set_pstat_disp] = React.useState(false); // パレットの統計情報を表示するか
     const [pallet_stat, set_pallet_stat] = React.useState([]); // パレットの統計情報
+
     const [min_frame, set_min_frame] = React.useState(9000 * 4); // 11:00-
     const [cur_frame, set_cur_frame] = React.useState(9000 * 4); // 11:00-
     const [max_frame, set_max_frame] = React.useState(9000 * 5);//(5hour)
@@ -37,9 +40,10 @@ export default function Page() {
     const [select_id, set_select_id] = React.useState(-1);
     const [select_pid, set_select_pid] = React.useState(-1);
     const [task_info, set_task_info] = React.useState([]); // ワーカー毎のタスク情報の表示
-    const [pinfo_disp, set_pinfo_disp] = React.useState(true); // パレット個別情報を表示するか
-    const [pallet_info, set_pallet_info] = React.useState([]); // パレット毎の情報
     const [use_video, set_use_video] = React.useState(false); // ビデオを再生するかどうか
+
+    const [small_panel, set_small_panel] = React.useState(false); // 表示最小化
+
 
     const pstatRef = React.useRef(null);
     const workerRef = React.useRef(null);
@@ -294,12 +298,13 @@ export default function Page() {
         wor.setAttribute("pallets", { 
             frame: cur_frame, 
             mode: disp_mode, 
+            pallet_disp: pallet_disp,
             pstat_disp: pstat_disp,
             pinfo_disp: pinfo_disp, 
             ptrace: ptrace_mode, 
             select_pid: select_pid 
         });
-    }, [cur_frame, disp_mode, select_pid,pinfo_disp]);
+    }, [cur_frame, disp_mode, select_pid,pinfo_disp,pallet_disp]);
 
 
     const controllerProps = {
@@ -312,8 +317,13 @@ export default function Page() {
         select_pid, set_select_pid,
         min_mode, set_min_mode, set_interval_time,
         pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info,
-        set_use_video, use_video
+        set_use_video, use_video,
+        pallet_disp, set_pallet_disp, small_panel, set_small_panel
 
+    }
+
+    const vis_style ={
+        visibility : small_panel?"hidden":"visible"
     }
 
     return (
@@ -410,21 +420,22 @@ export default function Page() {
                 </div>   
             
             */}
+            
             <div className="actions">
                 <div className="buttonUI">
-                    <button id="maru" type="button" className="button" style={{ padding: '4px 4px' }}>●</button>
+                    <button id="maru" type="button" className="button" style={vis_style}>●</button>
                     <br />
-                    <button id="play" type="button" className="button" style={{ padding: '8px 4px' }}>▶</button>
+                    <button id="play" type="button" className="button" style={vis_style}>▶</button>
                 </div>
                 <div className="buttonUI">
-                    <button id="hoshi" type="button" className="button">☆</button>
+                    <button id="hoshi" type="button" className="button" style={vis_style}>☆</button>
                     <br />
-                    <button id="shikaku" type="button" className="button">◆</button>
+                    <button id="shikaku" type="button" className="button" style={vis_style}>◆</button>
                 </div>
                 <div className="buttonUI">
-                    <button id="turn" type="button" className="button">◎</button>
+                    <button id="turn" type="button" className="button" style={vis_style}>◎</button>
                     <br />
-                    <button id="vplay" type="button" className="button">▣</button>
+                    <button id="vplay" type="button" className="button" style={vis_style}>▣</button>
                 </div>
             </div>
             <Controller {...controllerProps} />

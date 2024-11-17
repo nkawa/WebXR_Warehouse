@@ -16,6 +16,8 @@ export default function Controller(props) {
   const {min_mode, set_min_mode, interval_time, set_interval_time} = props;
   const {pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info} = props;
   const {set_use_video, use_video} = props;
+  const {pallet_disp, set_pallet_disp}= props;
+  const {small_panel, set_small_panel}=props;
 
   const on_set_cur_frame = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -49,6 +51,9 @@ export default function Controller(props) {
     set_ptrace_mode(e.target.checked);
   }
 
+  const change_small_panel  = (e)=>{
+    set_small_panel(e.target.checked);
+  }
   const change_label_mode  = (e)=>{
     set_label_mode(e.target.checked);
   }
@@ -79,6 +84,10 @@ export default function Controller(props) {
     set_use_video(e.target.checked);
   }
 
+  const change_pallet_disp = (e)=>{
+    set_pallet_disp(e.target.checked);
+  }
+
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
     let hour = Math.floor(sec / 3600);
@@ -101,9 +110,12 @@ export default function Controller(props) {
 
       <div className="controller" >
         <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">現在時刻</span></label></div>
+          <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">現在時刻　　　</span></label>
+          <label><input type="checkbox" className="form-center-control" id="ctlpnl" checked={small_panel} onChange={change_small_panel}/> Hide </label>
+          </div>
           <div className="col-md-2"><input type="string" className="form-center-control" id="frame_time" value={frame_to_time(cur_frame)} readOnly/></div>
         </div>
+        {(!small_panel)?
         <div className="row mb-0">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">表示オプション</span></label></div>
           <div className="col-md-2">
@@ -114,18 +126,20 @@ export default function Controller(props) {
             <label><input type="checkbox" className="form-center-control" id="label_work" checked={worker_disp} onChange={change_worker_disp}/> Stats</label>
           </div>
           <div className="col-md-2">
-            <label><input type="checkbox" className="form-center-control" id="pt" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
-            <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
+            <label><input type="checkbox" className="form-center-control" id="pt" checked={pallet_disp} onChange={change_pallet_disp}/> Pallet </label>
+            <label><input type="checkbox" className="form-center-control" id="pt" checked={ptrace_mode} onChange={change_ptrace_mode}/> Trace  </label>
+            <label><input type="checkbox" className="form-center-control" id="pinfo" checked={pinfo_disp} onChange={change_pinfo_disp}/> Info</label>
             <br/>
             <label><input type="checkbox" className="form-center-control" id="pstats" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats </label>
-            <label><input type="checkbox" className="form-center-control" id="pinfo" checked={pinfo_disp} onChange={change_pinfo_disp}/> Info</label>
+            <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
           </div>
           <div className="col-md-2">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">再生関係</span></label></div>
           <label><input type="checkbox" className="form-center-control" id="vd" checked={use_video} onChange={change_use_video}/> 動画  </label>
           <label><input type="checkbox" className="form-center-control" id="min" checked={min_mode} onChange={change_min_mode}/> 11:00~  </label>
           </div>
-        </div>
+        </div>:<></>
+        }
 
       </div>
       

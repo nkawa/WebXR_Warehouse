@@ -56,6 +56,7 @@ AFRAME.registerComponent("pallets", {
         ptrace: {type: 'boolean', default: true}, // パレットの移動経路を表示するかどうか
         pstat_disp: {type: 'boolean', default: false}, // パレットの統計情報を表示するかどうか
         pinfo_disp: {type: 'boolean', default: false},
+        pallet_disp: {type: 'boolean', default: true},// パレットを表示するか
         select_pid: {type: 'int', default: -1},
     },
   
@@ -76,7 +77,7 @@ AFRAME.registerComponent("pallets", {
             console.log("box fetch error",err);
         }
 
-        //pallet_trace
+        //pallet_trace // こっちはパレットの経路をパレット毎に作成済み（start.end 付き)
         try {
             const res = await fetch('/pallet_trace_20241003_1100-1130.json');
             this.pallet_trace = await res.json();
@@ -85,11 +86,14 @@ AFRAME.registerComponent("pallets", {
             // 移動経路表示用にもオブジェクトを用意
             this.ptrace=[];
 
+            //const pobj = document.createElement('a-line');
+
+
         }catch(err){
             console.log("Pallet Trace  fetch error",err);
         }
 
-
+        // 各パレットの状態（start/end/insp_start,end )
         try {
             const res =  await fetch('/box_insp_sort_area_07-12.json');
             const data = await res.json();
@@ -151,8 +155,8 @@ AFRAME.registerComponent("pallets", {
         }catch(err){
             console.log("pallet fetch error",err); 
         }
-      // パレット移動情報を読み込む
 
+      // パレット移動情報を読み込む
         try{
             const res =  await fetch('/frame_based_pallet_1110.json');
             const data = await res.json();
@@ -177,7 +181,6 @@ AFRAME.registerComponent("pallets", {
             console.log("pallet track fetch error",err);
         }
 
-        // これが難しいよねー。 init ではできないのかも。
 
     },
 
@@ -292,7 +295,6 @@ AFRAME.registerComponent("pallets", {
   
     update: function (oldData) {
         if (this.pobj === undefined) return;
-//        console.log("Pallet", this.data.mode);
 
         if (this.data.select_pid != this.selected_pid){// 変化があった場合
             if (this.selected_pid != -1){
@@ -312,15 +314,15 @@ AFRAME.registerComponent("pallets", {
         }
 
 
-//   box 毎の表示方法
-        if( this.data.mode =="None"){
+//   box 毎の表示方法(事前に作ってあった Pallet objectを表示)
+        if( this.data.mode =="None"  ){
             this.pobj.forEach((pinfo) => {
                 const frm = this.data.frame
-                if( pinfo.start <= frm && pinfo.end >= frm ){                    
+                if( pinfo.start <= frm && pinfo.end >= frm && this.data.pallet_disp){                    
                     pinfo.obj.object3D.position.y = 0.4;
                     pinfo.obj.setAttribute("visible",true);
                     // ここで色を設定 3種類が必要
-                    if ("inspect_start" in pinfo){
+                    if ("inspect_start" in pinfo ){
                         const mycolor = this.pcolor(frm, pinfo.start, pinfo.end, pinfo.inspect_start, pinfo.inspect_end);
 //                        console.log("Attribute:",pinfo, mycolor);
                         pinfo.obj.setAttribute("color",mycolor);
@@ -333,7 +335,7 @@ AFRAME.registerComponent("pallets", {
             // パレット stat 表示してなければ不要だよね。
             if (this.data.pstat_disp || this.data.pinfo_disp)
                 this.gen_pallet_stat(); // 毎回実行したくないけど。。。まあしかたない？
-        }else{
+        }else{ // 積み上げ表示
             this.pobj.forEach((pinfo) => {
                 if( pinfo.start <= this.data.frame){                    
                     pinfo.obj.object3D.position.y = pinfo.height*.9+0.4;
@@ -346,14 +348,13 @@ AFRAME.registerComponent("pallets", {
             })
         }
 
-// pallet track の表示
+// pallet track の表示（移動するパレット）
         if (this.data.mode == "None"){ // とりあえず、通常モードのみ
 
             const frm = this.data.frame%4500; // 11:00 は 36000から　（とりあえずループでごまかす）
 
             if (this.ptrack.hasOwnProperty(frm)){
                 const scene = document.querySelector("a-scene");
-
                 const frame_info = this.ptrack[frm];
 
                 frame_info.forEach((pinfo) => {
@@ -400,6 +401,11 @@ AFRAME.registerComponent("pallets", {
                     // 本当はobj も消していいかも
                 }
             })
+
+            // 全部の trace を表示しちゃえ！
+            if( this.data.ptrace){
+
+            }
 
         }
         
