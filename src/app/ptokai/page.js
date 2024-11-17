@@ -39,6 +39,7 @@ export default function Page() {
     const [task_info, set_task_info] = React.useState([]); // ワーカー毎のタスク情報の表示
     const [pinfo_disp, set_pinfo_disp] = React.useState(true); // パレット個別情報を表示するか
     const [pallet_info, set_pallet_info] = React.useState([]); // パレット毎の情報
+    const [use_video, set_use_video] = React.useState(false); // ビデオを再生するかどうか
 
     const pstatRef = React.useRef(null);
     const workerRef = React.useRef(null);
@@ -151,6 +152,32 @@ export default function Page() {
                 orbitcontrol.target.set(0,0,0);
             });
 
+            const turnButton = document.getElementById("turn");
+            turnButton.addEventListener("click", () => {
+                if (orbitcontrol.controls.autoRotate ){
+                    orbitcontrol.controls.autoRotate = false;
+                }else{
+                    orbitcontrol.controls.autoRotate = true;
+                }
+            });
+
+            const vplayButton = document.getElementById("vplay");
+            vplayButton.addEventListener("click", () => {
+                const vid = document.getElementById('FloorVideo');
+                set_use_video((v)=>{
+                    if (v){
+                        if (vid.paused){
+                            vid.play();                    
+                        }else{
+                            vid.pause();
+                        }
+                    }
+                    return v;
+                });
+
+            });
+
+
         }
     }
     const handlePstatEvent = (e) => {
@@ -178,6 +205,14 @@ export default function Page() {
             set_min_frame(0);
         }
     },[min_mode])
+
+    React.useEffect(()=>{
+        const vid = document.getElementById('FloorVideo');
+        if(use_video && vid.pause){
+            const current_sec = (cur_frame%9000)/30; 
+            vid.currentTime = current_sec;
+        }
+    },[cur_frame]);
 
     const setOrbitControl_Key = () => {
         const cam = document.getElementById("camera");
@@ -276,7 +311,9 @@ export default function Page() {
         worker_disp, set_worker_disp, worker_stat, set_worker_stat, select_id, set_select_id,
         select_pid, set_select_pid,
         min_mode, set_min_mode, set_interval_time,
-        pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info
+        pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info,
+        set_use_video, use_video
+
     }
 
     return (
@@ -295,6 +332,7 @@ export default function Page() {
                     <a-asset-item id="BIZfont" src="fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
 
                     <img id="FloorImage" src="stitched_20241106105031.jpg"></img>
+                    <video id="FloorVideo" src="video/new_small_overlap_1100_1200_ts_2x_nkawa1934.mp4"></video>
                 </a-assets>
 
                 {/*　ここで倉庫の床面を記述したい  サイズは */}
@@ -311,8 +349,13 @@ export default function Page() {
 
                 
                 */}
-                <a-image src="#FloorImage" width="39.32" height="23.12" rotation="-90 0 0" position="0 0 0" ></a-image>
-
+                {
+                (use_video)?
+                <a-video src="#FloorVideo" width="39.32" height="23.12" rotation="-90 0 0" position="0 0 0" ></a-video>
+                 :
+                 <a-image src="#FloorImage" width="39.32" height="23.12" rotation="-90 0 0" position="0 0 0" ></a-image>
+                }
+            
                 {/* 柱 *
                 <a-box width="1" height="4" depth="1" position="9.2 2 0.52" color="#999999" opacity="0.5"></a-box>            
                 <a-box width="1" height="4" depth="1" position="-1.05 2 0.52" color="#999999" opacity="0.5"></a-box>
@@ -378,10 +421,14 @@ export default function Page() {
                     <br />
                     <button id="shikaku" type="button" className="button">◆</button>
                 </div>
+                <div className="buttonUI">
+                    <button id="turn" type="button" className="button">◎</button>
+                    <br />
+                    <button id="vplay" type="button" className="button">▣</button>
+                </div>
             </div>
             <Controller {...controllerProps} />
 
         </>
     )
-
 }

@@ -15,6 +15,7 @@ export default function Controller(props) {
   const {pallet_stat} = props;
   const {min_mode, set_min_mode, interval_time, set_interval_time} = props;
   const {pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info} = props;
+  const {set_use_video, use_video} = props;
 
   const on_set_cur_frame = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -73,6 +74,10 @@ export default function Controller(props) {
   const change_min_mode  = (e)=>{
     set_min_mode(e.target.checked);
   }
+  
+  const change_use_video  = (e)=>{
+    set_use_video(e.target.checked);
+  }
 
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
@@ -117,7 +122,8 @@ export default function Controller(props) {
           </div>
           <div className="col-md-2">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">再生関係</span></label></div>
-            <label><input type="checkbox" className="form-center-control" id="min" checked={min_mode} onChange={change_min_mode}/> 11:00~  </label>
+          <label><input type="checkbox" className="form-center-control" id="vd" checked={use_video} onChange={change_use_video}/> 動画  </label>
+          <label><input type="checkbox" className="form-center-control" id="min" checked={min_mode} onChange={change_min_mode}/> 11:00~  </label>
           </div>
         </div>
 
