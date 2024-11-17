@@ -116,7 +116,7 @@ AFRAME.registerComponent("workers", {
       }
 
       this.selected_id = -1;
-
+      this.update_wokers();
       console.log("Worker Object Added", this.wobj.length);
     } catch (err) {
       console.log("worker fetch error", err);
@@ -166,11 +166,38 @@ AFRAME.registerComponent("workers", {
     });
   },
 
+  update_wokers: function (){
+    const frm = this.data.frame % 4500; // 11:00 は 36000から
+    const frame_info = this.workers[frm].tracks;
+    //                console.log("Tracks len",this.data.frame,  frame_info.length);
+    const view_obj = Array(39).fill(false);
+    frame_info.forEach((winfo, idx) => {
+      const wid = winfo.track_id;
+      view_obj[wid] = true;
+      //                    console.log("Worker",wid);
+      const xy = winfo.bbox;
+      const xy2 = conv_global_to_local_xy(
+        xy[0] + xy[2] / 2,
+        xy[1] + xy[3] / 2
+      );
+      this.wobj[wid].obj.setAttribute("position", xy2[0] + " 0.8 " + xy2[1]);
+      this.wobj[wid].obj.setAttribute("visible", true);
+    });
+    this.updateLabels();
+    // 表示されなかったオブジェクトを消す
+    view_obj.forEach((v, idx) => {
+      if (!v || !this.data.worker) {
+        this.wobj[idx].obj.setAttribute("visible", false);
+      }
+    });
+
+  },
+
   tick: function (time, delta) {
     // カメラが動いたかを検知したい
     if (this.camera === undefined) return;
-    const currentPosition = this.camera.object3D.position;
-    const currentRotation = this.camera.object3D.rotation;
+    const currentPosition = this.threeCamera.position;
+    const currentRotation = this.threeCamera.rotation;
     const moved = !currentPosition.equals(this.previousPosition);
     const rotated = !currentRotation.equals(this.previousRotation);
 
@@ -179,6 +206,7 @@ AFRAME.registerComponent("workers", {
       //          console.log('カメラが移動しました:', currentPosition);
       this.previousPosition.copy(currentPosition);
     }
+//    console.log("Pos",currentPosition)
 
     // カメラの回転が変化したかチェック
     if (rotated) {
@@ -204,9 +232,11 @@ AFRAME.registerComponent("workers", {
       }
       if (this.data.select_pid != -1){
 //                console.log("Select",this.data.select_pid, typeof this.data.select_pid, this.box_obj);
+        if (typeof this.wobj[this.data.select_id] !== "undefined"){
           this.wobj[this.data.select_id].obj.setAttribute("color", "#FF0000");
-          this.wobj[this.data.select_id].obj.setAttribute("height", 3.5);
-          this.wobj[this.data.select_id].obj.setAttribute("radius", 0.8);
+          this.wobj[this.data.select_id].obj.setAttribute("height", 3);
+          this.wobj[this.data.select_id].obj.setAttribute("radius", 0.5);
+        }
       }
       this.selected_id = this.data.select_id;
   }

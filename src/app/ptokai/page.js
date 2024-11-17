@@ -95,21 +95,26 @@ export default function Page() {
 
     const set_control_buttons = () => {
         const doButton  = document.getElementById("hoshi");
-        const cam = document.getElementById("cameraRig");
+        const cam = document.getElementById("camera");
         doButton.addEventListener("click", () => {
-            const camel = document.getElementById("cameraRig");
+            cam.getObject3D('camera').position.set(0, 10, 1);
+            cam.getObject3D('camera').rotation.set(Math.PI/-2, 0, 0);
+//            cam.components['orbit-controls'].setCameraPosition(0, 10, 1);
+//            const camel = document.getElementById("cameraRig");
             // 視点を上空からにしたい
-            cam.setAttribute("position","0 13 0");
+//            cam.setAttribute("position","0 13 0");
 //            cam.setAttribute("rotation",{x:-90,y:0,z:0}); 
-            cam.object3D.rotation.set(-Math.PI/2, 0, 0);
+//            cam.object3D.rotation.set(-Math.PI/2, 0, 0);
 //            cam.object3D.updateMatrixWorld();
 //            console.log(cam.object3D.rotation);
         });
         const maruButton  = document.getElementById("maru");
         maruButton.addEventListener("click", () => {
             // 視点を上空からにしたい
+
+
             const camel = document.getElementById("camera");
-            camel.setAttribute("position","0 1.6 0");
+            camel.setAttribute("position","0 0 0");
             camel.setAttribute("rotation","0 0 0"); 
 //            console.log("Camera",camel.object3D.rotation);
             cam.setAttribute("position","0 0 0");
@@ -120,8 +125,21 @@ export default function Page() {
         const shikakuButton  = document.getElementById("shikaku");
         shikakuButton.addEventListener("click", () => {
             // 視点を斜め上空からにしたい
-            cam.setAttribute("position","0 3 10");
-            cam.setAttribute("rotation","-45 0 0"); 
+            const cam = document.getElementById("camera");
+            if(cam){
+                console.log("Camera",cam);
+                const oc = cam.components['orbit-controls'];
+                if(oc){
+                    console.log("OrbitControl",oc,oc.controls);
+                    const occ = oc.controls;
+                    occ.listenToKeyEvents(window);
+                }else{
+                    console.log("no orbit!")
+                }
+            }
+
+//            cam.setAttribute("position","0 3 10");
+//            cam.setAttribute("rotation","-45 0 0"); 
         });
         const playButton = document.getElementById("play");
         playButton.addEventListener("click", play_button_listener);
@@ -130,6 +148,20 @@ export default function Page() {
     const handlePstatEvent = (e) => {
 //        console.log("Got Pstat Event!", e.detail.length);
         set_pallet_stat(e.detail);
+    }
+
+    const setOrbitControl_Key = () =>{
+        const cam = document.getElementById("camera");
+        if(cam){
+            console.log("Camera: for orbit",cam);
+            const oc = cam.components['orbit-controls'];
+            if(oc){
+                console.log("OrbitControl",oc);
+                oc.controls.listenToKeyEvents(window);
+            }else{
+                console.log("No orbit!",oc)
+            }
+        }
     }
     
     // 初回のみ実行
@@ -143,14 +175,16 @@ export default function Page() {
             }
             require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
             require('aframe-troika-text');
+            require('aframe-orbit-controls');
             require('../../components/aframe-gui');
             require('../../vendor/button-wasd-controls');
             require('../../components/updown-key-controls');
             require('./boxObjects.js'); // A-Frame pallets
             require('./workerObjects.js'); // A-Frame workers
-            require('../../components/camera-move-notify');// カメラ移動通知
+//            require('../../components/camera-move-notify');// カメラ移動通知
 //            require('./load_worker_stat');// データ読み込み
             
+
             console.log("Load worker stat")
             const stat_data = load_workers();
 //            console.log("Stat data",stat_data);
@@ -159,11 +193,15 @@ export default function Page() {
                 set_worker_stat(data);
             });
 
-
-
             set_control_buttons();
 
+
+            // add key event listener to OrbitControl
+            setTimeout(setOrbitControl_Key, 500);
+            
+
             return ()=>{
+                // パレット状態を boxObjects と交換するためのイベントリスナ
                 if(pstatEl){
                     pstatEl.removeEventListener("pallet_stat", handlePstatEvent);
                 }
@@ -184,7 +222,7 @@ export default function Page() {
 
     React.useEffect(()=>{
         const wor = document.getElementById("pallets_el");
-        wor.setAttribute("pallets", {frame:cur_frame, mode:disp_mode, ptrace: ptrace_mode, select_pid:select_pid});
+        wor.setAttribute("pallets", {frame:cur_frame, mode:disp_mode, pstat_disp: pstat_disp, ptrace: ptrace_mode, select_pid:select_pid});
     },[ cur_frame,disp_mode,select_pid]);
 
 
@@ -202,9 +240,12 @@ export default function Page() {
         <>
             {/* for react dev-tool   <Script src="http://localhost:8097" /> */}
             <a-scene xr-mode-ui="enabled: true"
-                cursor__mouse="rayOrigin: mouse"
-                cursor__touch="rayOrigin: touch"
+             
             >
+                {/*
+                                cursor__mouse="rayOrigin: mouse"
+                cursor__touch="rayOrigin: touch"
+                */}
                 <a-assets>
                     <a-asset-item id="iconfontsolid" src="fonts/fa-solid-900.ttf"></a-asset-item>
                     <a-asset-item id="iconfontbrand" src="fonts/fa-brands-400.ttf"></a-asset-item>
@@ -234,11 +275,11 @@ export default function Page() {
                 <a-box width="1" height="4" depth="1" position="-1.05 2 0.52" color="#999999" opacity="0.5"></a-box>
                 <a-box width="1" height="4" depth="1" position="9.2 2 -9.48" color="#999999" opacity="0.5"></a-box>
                 <a-box width="1" height="4" depth="1" position="-1.05 2 -9.48" color="#999999" opacity="0.5"></a-box>
+                <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: [gui-interactable]"></a-entity>
                 */}
 
                 <a-sky color="#444466"></a-sky>
 
-                <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: [gui-interactable]"></a-entity>
                 
 
                 <a-entity id="pallets_el" pallets={"frame:"+cur_frame} ref={pstatRef}>  </a-entity>
@@ -248,21 +289,26 @@ export default function Page() {
                 {/* Mouse cursor so we can click on the scene with mouse or touch. 
                 <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: [gui-interactable]"></a-entity>
                 <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: [gui-interactable]"></a-entity>
+                wasd-controls="fly:true"
                   */}
                
-                {/*	 Camera + cursor. -->*/}
+                {/*	 Camera + cursor. -->
+                button-wasd-controls
+                     updown-key-controls wasd-controls="enabled: true"
+            
+                */}
                 <a-entity id="cameraRig" position="0 0 0"  >
-                    <a-camera id="camera" position="0 1.6 0" wasd-controls="fly:true" button-wasd-controls updown-key-controls >  </a-camera>
+                    <a-camera id="camera" look-controls="enabled: true" 
+                     orbit-controls="initialPosition: 0 3 5; rotateSpeed: 0.9; pan-speed: 8; maxPolarAngle: 180;"
+                     wasd-controls="enabled: false"
+                     >  
+                </a-camera>
+                     
+                     
                 </a-entity>
             </a-scene>
             <div id="hud" className="hudOverlay"></div>
-
-            <div className="actions">
-                <div className="buttonUI">
-                    <button id="maru" type="button" className="button">●</button>
-                    <br />
-                    <button id="play" type="button" className="button">▶</button>
-                </div>   
+            {/*
                 <div className="buttonUI">
                     <button id="leftBtn" type="button" className="button">←</button>
                 </div>
@@ -273,6 +319,14 @@ export default function Page() {
                 </div>
                 <div className="buttonUI">
                     <button id="rightBtn" type="button" className="button">→</button>
+                </div>   
+            
+            */}
+            <div className="actions">
+                <div className="buttonUI">
+                    <button id="maru" type="button" className="button" style={{padding: '4px 4px'}}>●</button>
+                    <br />
+                    <button id="play" type="button" className="button" style={{padding: '8px 4px'}}>▶</button>
                 </div>   
                 <div className="buttonUI">
                     <button id="hoshi" type="button" className="button">☆</button>

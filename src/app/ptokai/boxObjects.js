@@ -52,6 +52,7 @@ AFRAME.registerComponent("pallets", {
         frame: {type: 'int', default: 0},
         mode: {type: 'string', default: 'None'},
         ptrace: {type: 'boolean', default: true}, // パレットの移動経路を表示するかどうか
+        pstat_disp: {type: 'boolean', default: false}, // パレットの統計情報を表示するかどうか
         select_pid: {type: 'int', default: -1},
     },
   
@@ -173,6 +174,7 @@ AFRAME.registerComponent("pallets", {
 
     gen_pallet_stat: function (){
            // pallet_stat を作成！
+
            const pstat = [];
            this.pobj.forEach((pinfo) => {
                if (this.data.frame >= pinfo.start && this.data.frame <= pinfo.end){
@@ -184,7 +186,7 @@ AFRAME.registerComponent("pallets", {
                    }
                }
            });
-           console.log("Pallet Stats",pstat.length);
+//           console.log("Pallet Stats",pstat.length);
            const pstEvent = new CustomEvent("pallet_stats", {detail: pstat});
            this.el.dispatchEvent(pstEvent);
     },
@@ -227,19 +229,17 @@ AFRAME.registerComponent("pallets", {
 
         if (this.data.select_pid != this.selected_pid){// 変化があった場合
             if (this.selected_pid != -1){
-                this.box_obj[this.selected_pid].setAttribute("wireframe", "true");
-                this.box_obj[this.selected_pid].setAttribute("color","#77ffdd"); // 元の色
-                this.box_obj[this.selected_pid].setAttribute("width", "0.9");
-                this.box_obj[this.selected_pid].setAttribute("height", "0.9");
-        
-
+                this.box_obj[this.selected_pid-1].setAttribute("wireframe", "true");
+                this.box_obj[this.selected_pid-1].setAttribute("color","#77ffdd"); // 元の色
+                this.box_obj[this.selected_pid-1].setAttribute("width", "0.9");
+                this.box_obj[this.selected_pid-1].setAttribute("height", "0.9");
             }
             if (this.data.select_pid != -1){
 //                console.log("Select",this.data.select_pid, typeof this.data.select_pid, this.box_obj);
-                this.box_obj[this.data.select_pid].setAttribute("color","#ff0000"); //赤枠
-                this.box_obj[this.data.select_pid].setAttribute("wireframe", "false");
-                this.box_obj[this.data.select_pid].setAttribute("width", "1.1");
-                this.box_obj[this.data.select_pid].setAttribute("height", "1.1");
+                this.box_obj[this.data.select_pid-1].setAttribute("color","#ff0000"); //赤枠
+                this.box_obj[this.data.select_pid-1].setAttribute("wireframe", "false");
+                this.box_obj[this.data.select_pid-1].setAttribute("width", "1.1");
+                this.box_obj[this.data.select_pid-1].setAttribute("height", "1.1");
             }
             this.selected_pid = this.data.select_pid;
         }
@@ -263,13 +263,15 @@ AFRAME.registerComponent("pallets", {
                 }
                 
             })
-            this.gen_pallet_stat(); // 毎回実行したくないけど。。。まあしかたない？
+            // パレット stat 表示してなければ不要だよね。
+            if (this.data.pstat_disp)
+                this.gen_pallet_stat(); // 毎回実行したくないけど。。。まあしかたない？
         }else{
             this.pobj.forEach((pinfo) => {
                 if( pinfo.start <= this.data.frame){                    
                     pinfo.obj.object3D.position.y = pinfo.height*.9+0.4;
                     pinfo.obj.setAttribute("visible",true);
-                    obj.setAttribute("color","#00eeee");// 色でモードを表現したい！（本当は　inspect されていない時間を表現したい)
+                    pinfo.obj.setAttribute("color","#00eeee");// 色でモードを表現したい！（本当は　inspect されていない時間を表現したい)
 
                 }else{
                     pinfo.obj.setAttribute("visible",false);

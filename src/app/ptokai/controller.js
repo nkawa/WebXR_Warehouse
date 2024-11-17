@@ -85,17 +85,17 @@ export default function Controller(props) {
         <div className="row mb-0">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">Disp-mode</span></label></div>
           <div className="col-md-2">
-            <label><input type="checkbox" className="form-center-control" id="label_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
-            <label><input type="checkbox" className="form-center-control" id="label_mode" checked={label_mode} onChange={change_label_mode}/> Label</label> 
+            <label><input type="checkbox" className="form-center-control" id="worker_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
+            <label><input type="checkbox" className="form-center-control" id="clabel_mode" checked={label_mode} onChange={change_label_mode}/> Label </label> 
             <label><input type="checkbox" className="form-center-control" id="label_mode" checked={task_label} onChange={change_task_label}/> Task</label> 
             <br/>
             <label><input type="checkbox" className="form-center-control" id="label_work" checked={worker_disp} onChange={change_worker_disp}/> Stats</label>
           </div>
           <div className="col-md-2">
-            <label><input type="checkbox" className="form-center-control" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
+            <label><input type="checkbox" className="form-center-control" id="pt" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
             <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
             <br/>
-            <label><input type="checkbox" className="form-center-control" id="label_work" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats</label>
+            <label><input type="checkbox" className="form-center-control" id="pstats" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats</label>
           </div>
         </div>
 
