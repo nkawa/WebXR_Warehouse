@@ -63,6 +63,8 @@ const worker_colors = [
   "#5E2C29", // 38 darkred
 ];
 
+const task_labels = ["検品中", "搬送中", "仕分け中"];
+
 AFRAME.registerComponent("workers", {
   schema: {
     frame: { type: "int", default: 0 },
@@ -78,6 +80,14 @@ AFRAME.registerComponent("workers", {
     console.log("Initialize Workers!!", this.data.frame);
     this.previousPosition = new THREE.Vector3();
     this.previousRotation = new THREE.Euler();
+    
+    try{// ワーカの配列で、タスクの start/end が記載
+      const res = await fetch("/worker_task_eachframe_20241003_11.json");
+      this.w_task = await res.json();
+      console.log("Load worker task info",this.w_task.length);
+    } catch (err) {
+      console.log("worker task frame error", err);
+    }
 
     try {
       const res = await fetch("/frame_based_worker_1110.json");
@@ -90,6 +100,7 @@ AFRAME.registerComponent("workers", {
       // worker object 毎に初期設定
 
       this.wobj = [];
+      this.task_objs = []; // タスク情報（これもテキスト）
       this.textObjs = [];
       // 今回は　39ワーカ固定で。
       for (let i = 0; i < 39; i++) {
@@ -104,6 +115,7 @@ AFRAME.registerComponent("workers", {
         scene.appendChild(obj);
         this.wobj.push({ obj: obj, id: i });
 
+        
         const textObj = document.createElement("div");
         textObj.setAttribute("id", `worker${i}`);
         textObj.setAttribute(
@@ -113,6 +125,15 @@ AFRAME.registerComponent("workers", {
         textObj.setAttribute("visible", true);
         hud.appendChild(textObj);
         this.textObjs.push(textObj);
+
+        // タスク表示用のオブジェクト（本当はグループ化したほうが簡単？）
+        // 結局、Labelと同じで CSS で表示したほうがよさそう
+//        const tobj = <ModelLabel key={i} metadata={i+":検品"} position={{x:100,y:100}}></ModelLabel>
+//        console.log("TOBJ",tobj)
+//        this.task_objs.append(tobj)
+//        hud.appendChild(tobj);
+
+
       }
 
       this.selected_id = -1;
@@ -139,6 +160,9 @@ AFRAME.registerComponent("workers", {
     const frame_info = this.workers[frm].tracks;
     const view_obj = Array(39).fill(false);
 
+
+    const wtask_info=[];
+    
     if (this.data.label) {
       frame_info.forEach((winfo, idx) => {
         const wid = winfo.track_id;
@@ -152,6 +176,29 @@ AFRAME.registerComponent("workers", {
         const sy = (height / 2) * (-projection.y + 1.0) - 10;
         if (sx < 0 || sx > width || sy < 0 || sy > height) return; // 画面外の場合は表示しない
         //                    console.log("Draw text",wid, sx,sy);
+
+        if(this.data.task){
+          const wk =  this.w_task[wid];
+//          console.log("Task of",idx, wk);
+          const tfrm = this.data.frame %9000; // タスクはとりあえず１時間分入ってる
+          const tf = wk.some((info)=>{ // 見つかるまでのループ
+//            console.log("task info",info)
+            if( info.start <= tfrm  && info.end >= tfrm){
+              const frmdiff = tfrm-info.start;
+              const sec = frmdiff/2.5
+              const min = Math.floor(sec /60).toString().padStart(2,'0');
+              const secstr = Math.floor(sec %60).toString().padStart(2,'0');
+              wtask_info.push({
+                id: wid,
+                pos: {x:sx+90,y:sy-74},
+                txt: task_labels[info.label]+'('+min+":"+secstr+')',
+                label: info.label,
+              });
+              return true;
+            }
+          });
+//          console.log("Found",tfrm , idx, tf);
+        }
         const tf = this.textObjs[wid];
         view_obj[wid] = true;
         tf.innerHTML = `${wid}`;
@@ -164,6 +211,12 @@ AFRAME.registerComponent("workers", {
         this.textObjs[idx].innerHTML = "";
       }
     });
+
+    if(this.data.task){
+      const wkEvent = new CustomEvent("worker_task", {detail: wtask_info});
+      this.el.dispatchEvent(wkEvent);
+    }
+
   },
 
   update_wokers: function (){
@@ -182,6 +235,7 @@ AFRAME.registerComponent("workers", {
       );
       this.wobj[wid].obj.setAttribute("position", xy2[0] + " 0.8 " + xy2[1]);
       this.wobj[wid].obj.setAttribute("visible", true);
+
     });
     this.updateLabels();
     // 表示されなかったオブジェクトを消す

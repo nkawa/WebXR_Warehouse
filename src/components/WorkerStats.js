@@ -1,7 +1,6 @@
 import React ,  { useState } from "react";
 
-
-
+// ワーカの統計情報を表示
 
 const WorkerStats = (props) => {
     const workers = props.workers;

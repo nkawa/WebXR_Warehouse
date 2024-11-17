@@ -13,6 +13,7 @@ export default function Controller(props) {
   const {worker_disp, set_worker_disp, worker_stat, set_worker_stat} = props;
   const {select_id,set_select_id,select_pid, set_select_pid, pstat_disp, set_pstat_disp} = props;
   const {pallet_stat} = props;
+  const {min_mode, set_min_mode, interval_time, set_interval_time} = props;
 
   const on_set_cur_frame = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -21,8 +22,16 @@ export default function Controller(props) {
 
   const on_set_frame_step = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
-    set_frame_step(value)
+//
+    set_frame_step(value);
   }
+
+  const on_set_interval_time = (e)=>{
+    let value = Number.parseFloat(e.target.value || 0)
+//
+    set_interval_time(value);
+  }
+
 
   const change_disp_mode  = ()=>{
     console.log("Disp-mode:", disp_mode)
@@ -57,6 +66,10 @@ export default function Controller(props) {
     set_pstat_disp(e.target.checked);
   }
 
+  const change_min_mode  = (e)=>{
+    set_min_mode(e.target.checked);
+  }
+
   const frame_to_time = (frame) => {
     let sec = frame / 2.5;
     let hour = Math.floor(sec / 3600);
@@ -79,11 +92,11 @@ export default function Controller(props) {
 
       <div className="controller" >
         <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">Cur Frame</span></label></div>
+          <div className="col-md-4"><label htmlFor="frame_time" className="form-label"><span className="form-control-plaintext">現在時刻</span></label></div>
           <div className="col-md-2"><input type="string" className="form-center-control" id="frame_time" value={frame_to_time(cur_frame)} readOnly/></div>
         </div>
         <div className="row mb-0">
-          <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">Disp-mode</span></label></div>
+          <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">表示オプション</span></label></div>
           <div className="col-md-2">
             <label><input type="checkbox" className="form-center-control" id="worker_mode" checked={worker_mode} onChange={change_worker_mode}/> Worker  </label> 
             <label><input type="checkbox" className="form-center-control" id="clabel_mode" checked={label_mode} onChange={change_label_mode}/> Label </label> 
@@ -96,6 +109,10 @@ export default function Controller(props) {
             <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
             <br/>
             <label><input type="checkbox" className="form-center-control" id="pstats" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats</label>
+          </div>
+          <div className="col-md-2">
+          <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">再生関係</span></label></div>
+            <label><input type="checkbox" className="form-center-control" id="min" checked={min_mode} onChange={change_min_mode}/> 11:00~  </label>
           </div>
         </div>
 
@@ -129,8 +146,11 @@ export default function Controller(props) {
            </div>
           </div>
           <div className="col-md-12">
-            <input type="range" value={frame_step} min={1} max={100} step={1} width={500} onChange={on_set_frame_step}
+            <input type="range" value={frame_step} min={1} max={200} step={1} width={500} onChange={on_set_frame_step}
                 className="xr-input-range-sm" id="frame" />
+                 
+            <input type="range" value={interval_time} min={20} max={400} step={1} width={300} onChange={on_set_interval_time}
+                className="xr-input-range-sm2" id="frame" />
           </div>
       </div>
 

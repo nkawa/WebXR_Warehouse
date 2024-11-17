@@ -109,6 +109,22 @@
     }
 }
 
+.xr-input-range-sm2 {
+    -webkit-appearance: none;
+    cursor: pointer;
+    position:fixed;
+    width: 500px;
+    height: 10px;
+    left: 600px;
+    display: grid;
+    background-color:rgba(192,192,192,0.2);
+    &::-webkit-slider-thumb{
+        width: 10px;
+        height: 10px;
+    }
+}
+
+
 
 .hudOverlay{
     position: fixed;
