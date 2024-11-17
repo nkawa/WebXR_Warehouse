@@ -12,6 +12,7 @@ import { load_workers } from './load_worker_stat.js';
 
 //import '../../vendor/button-wasd-controls.css';
 import WorkerTaskStates from "../../components/WorkerTaskStates";
+import PalletInfoDisp from '../../components/PalletInfoDisp';
 
 
 export default function Page() {
@@ -36,6 +37,8 @@ export default function Page() {
     const [select_id, set_select_id] = React.useState(-1);
     const [select_pid, set_select_pid] = React.useState(-1);
     const [task_info, set_task_info] = React.useState([]); // ワーカー毎のタスク情報の表示
+    const [pinfo_disp, set_pinfo_disp] = React.useState(true); // パレット個別情報を表示するか
+    const [pallet_info, set_pallet_info] = React.useState([]); // パレット毎の情報
 
     const pstatRef = React.useRef(null);
     const workerRef = React.useRef(null);
@@ -155,6 +158,11 @@ export default function Page() {
         set_pallet_stat(e.detail);
     }
 
+    const handlePalletInfo = (e) => {
+//        console.log("Got PalletInfo", e.detail.length, e.detail);
+        set_pallet_info(e.detail);
+    }    
+
     const handleWorkerEvent = (e) => {
 //        console.log("Got Worker Event!", e.detail.length);
         set_task_info(e.detail);
@@ -192,9 +200,10 @@ export default function Page() {
         if (typeof window !== "undefined") {
             // pstatRef を使って、boxObjects からパレットの統計情報を取得する
             const pstatEl = pstatRef.current;
-            //            console.log("PstatEl",pstatEl);
+//            console.log("PstatEl",pstatEl);
             if (pstatEl) {
                 pstatEl.addEventListener("pallet_stats", handlePstatEvent);
+                pstatEl.addEventListener("pallet_info", handlePalletInfo);
             }
             const workerEl = workerRef.current;
             if (workerEl) {
@@ -247,8 +256,15 @@ export default function Page() {
 
     React.useEffect(() => {
         const wor = document.getElementById("pallets_el");
-        wor.setAttribute("pallets", { frame: cur_frame, mode: disp_mode, pstat_disp: pstat_disp, ptrace: ptrace_mode, select_pid: select_pid });
-    }, [cur_frame, disp_mode, select_pid]);
+        wor.setAttribute("pallets", { 
+            frame: cur_frame, 
+            mode: disp_mode, 
+            pstat_disp: pstat_disp,
+            pinfo_disp: pinfo_disp, 
+            ptrace: ptrace_mode, 
+            select_pid: select_pid 
+        });
+    }, [cur_frame, disp_mode, select_pid,pinfo_disp]);
 
 
     const controllerProps = {
@@ -259,7 +275,8 @@ export default function Page() {
         label_mode, set_label_mode, worker_mode, set_worker_mode, pallet_stat,
         worker_disp, set_worker_disp, worker_stat, set_worker_stat, select_id, set_select_id,
         select_pid, set_select_pid,
-        min_mode, set_min_mode, set_interval_time
+        min_mode, set_min_mode, set_interval_time,
+        pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info
     }
 
     return (
@@ -333,6 +350,7 @@ export default function Page() {
 
                 </a-entity>
             </a-scene>
+            <PalletInfoDisp pallet_info={pallet_info} pinfo_disp={pinfo_disp}></PalletInfoDisp>
             <WorkerTaskStates task_info={task_info} task_label={task_label}></WorkerTaskStates>
             <div id="hud" className="hudOverlay"></div>
             {/*

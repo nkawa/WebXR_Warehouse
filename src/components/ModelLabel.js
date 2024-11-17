@@ -2,7 +2,7 @@ import React from 'react';
 
 // ラベル毎に色を変えたい
 
-const colors=['cyan','red','green']
+const colors=['cyan','rgb(237,119,119)','lightgreen']
 
 const ModelLabel = ({ id, position, metadata,label }) => {
     const color = colors[label];

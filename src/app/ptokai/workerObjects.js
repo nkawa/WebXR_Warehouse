@@ -173,7 +173,7 @@ AFRAME.registerComponent("workers", {
         const projection = worldPosition.project(this.threeCamera);
         if (projection.z > 1.0) return; // カメラの後ろにある場合は表示しない
         const sx = (width / 2) * (+projection.x + 1.0) - 4 - (wid > 9 ? 5 : 0);
-        const sy = (height / 2) * (-projection.y + 1.0) - 10;
+        const sy = (height / 2) * (-projection.y + 1.0) - 5;
         if (sx < 0 || sx > width || sy < 0 || sy > height) return; // 画面外の場合は表示しない
         //                    console.log("Draw text",wid, sx,sy);
 

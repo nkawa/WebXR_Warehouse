@@ -24,6 +24,8 @@ const conv_global_to_local_xy = (x,y) => {
     return [local_x,local_y];
 }
 
+const pallet_state= ["着荷","検品","搬送待ち"];
+
 // 枠の描画
 const draw_box =(box_info,parent) =>{
     const scene = document.querySelector("a-scene");
@@ -53,12 +55,16 @@ AFRAME.registerComponent("pallets", {
         mode: {type: 'string', default: 'None'},
         ptrace: {type: 'boolean', default: true}, // パレットの移動経路を表示するかどうか
         pstat_disp: {type: 'boolean', default: false}, // パレットの統計情報を表示するかどうか
+        pinfo_disp: {type: 'boolean', default: false},
         select_pid: {type: 'int', default: -1},
     },
   
     init: async function () {
       // To keep track of the pressed keys.
       console.log("Initialize Pallet!!", this.data.frame);
+      this.previousPosition = new THREE.Vector3();
+      this.previousRotation = new THREE.Euler();
+  
       // 本当は以下のファイル読み込みはパラレルで実行可能
         try {
             const res = await fetch('/ptokai_box_info.json');
@@ -135,6 +141,9 @@ AFRAME.registerComponent("pallets", {
 
             });
 
+            this.camera = document.querySelector("a-camera");
+            this.threeCamera = this.camera.getObject3D("camera");
+    
             this.gen_pallet_stat();
 
             this.selected_pid = -1;
@@ -168,14 +177,17 @@ AFRAME.registerComponent("pallets", {
             console.log("pallet track fetch error",err);
         }
 
-
+        // これが難しいよねー。 init ではできないのかも。
 
     },
 
     gen_pallet_stat: function (){
            // pallet_stat を作成！
+           const width = window.innerWidth;
+           const height = window.innerHeight;       
 
            const pstat = [];
+           const pallet_info = [];
            this.pobj.forEach((pinfo) => {
                if (this.data.frame >= pinfo.start && this.data.frame <= pinfo.end){
                    if ("inspect_start" in pinfo){
@@ -183,16 +195,71 @@ AFRAME.registerComponent("pallets", {
                        const inspect = (pinfo.inspect_end - pinfo.inspect_start)/2.5/60;
                        const transport = (pinfo.end - pinfo.inspect_end)/2.5/60;
                        pstat.push({"id":pinfo.id, "workTimes": {"arrive":arrive, "inspect":inspect, "transport":transport}});
+
+                        if (this.data.pinfo_disp){
+                            if (pinfo.obj){
+                            const worldPosition = pinfo.obj.object3D.getWorldPosition(new THREE.Vector3());
+                            worldPosition.y += 0.4; //　ラベル表示位置を 1m 上空に 高さを調整
+                        // スクリーン座標を取得する
+//                            console.log("World Position",pinfo, worldPosition, this.threeCamera);
+                            const projection = worldPosition.project(this.threeCamera);
+                            if (projection.z > 1.0) return; // カメラの後ろにある場合は表示しない
+                            const sx = (width / 2) * (+projection.x + 1.0) - 40;
+                            const sy = (height / 2) * (-projection.y + 1.0) ;
+                            const mfrm = this.data.frame;
+                            let state = 0; // "着荷"
+                            let tm = mfrm - pinfo.start;
+                            if (mfrm >= pinfo.inspect_start && mfrm < pinfo.inspect_end ){
+                                state = 1; // "検品"
+                                tm = mfrm - pinfo.inspect_start;
+                            }else if (mfrm >= pinfo.inspect_end){
+                                state = 2; // "搬送待ち"
+                                tm = mfrm - pinfo.inspect_end;
+                            }
+
+                            const sec = tm/2.5
+                            const min = Math.floor(sec /60).toString().padStart(2,'0');
+                            const secstr = Math.floor(sec %60).toString().padStart(2,'0');
+                            pallet_info.push({
+                                id: pinfo.id,
+                                pos: {x:sx, y:sy},
+                                txt: pallet_state[state]+'('+min+":"+secstr+')',
+                                state: state
+                            });
+                        }
+                        }
                    }
                }
            });
 //           console.log("Pallet Stats",pstat.length);
+        if(this.data.pstat_disp){
            const pstEvent = new CustomEvent("pallet_stats", {detail: pstat});
            this.el.dispatchEvent(pstEvent);
+        }
+        if(this.data.pinfo_disp){
+            const pinfoEvent = new CustomEvent("pallet_info", {detail: pallet_info});
+            this.el.dispatchEvent(pinfoEvent);         
+        }
     },
   
     tick: function (time, delta) {
+    // カメラが動いたかを検知したい
+        if (this.camera === undefined) return;
+        const currentPosition = this.threeCamera.position;
+        const currentRotation = this.threeCamera.rotation;
+        const moved = !currentPosition.equals(this.previousPosition);
+        const rotated = !currentRotation.equals(this.previousRotation);
 
+    if (moved) {
+      this.previousPosition.copy(currentPosition);
+    }
+    if (rotated) {
+      this.previousRotation.copy(currentRotation);
+    }
+
+    if (moved || rotated) {
+      this.gen_pallet_stat();
+    }
     },
 
     pcolor: function (frm, start, end, inspect_start, inspect_end){
@@ -264,7 +331,7 @@ AFRAME.registerComponent("pallets", {
                 
             })
             // パレット stat 表示してなければ不要だよね。
-            if (this.data.pstat_disp)
+            if (this.data.pstat_disp || this.data.pinfo_disp)
                 this.gen_pallet_stat(); // 毎回実行したくないけど。。。まあしかたない？
         }else{
             this.pobj.forEach((pinfo) => {

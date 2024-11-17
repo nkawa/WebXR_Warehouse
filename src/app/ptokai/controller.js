@@ -14,6 +14,7 @@ export default function Controller(props) {
   const {select_id,set_select_id,select_pid, set_select_pid, pstat_disp, set_pstat_disp} = props;
   const {pallet_stat} = props;
   const {min_mode, set_min_mode, interval_time, set_interval_time} = props;
+  const {pinfo_disp, set_pinfo_disp,pallet_info, set_pallet_info} = props;
 
   const on_set_cur_frame = (e)=>{
     let value = Number.parseFloat(e.target.value || 0)
@@ -65,6 +66,9 @@ export default function Controller(props) {
   const change_pstat_disp  = (e)=>{
     set_pstat_disp(e.target.checked);
   }
+  const change_pinfo_disp  = (e)=>{
+    set_pinfo_disp(e.target.checked);
+  }
 
   const change_min_mode  = (e)=>{
     set_min_mode(e.target.checked);
@@ -108,7 +112,8 @@ export default function Controller(props) {
             <label><input type="checkbox" className="form-center-control" id="pt" checked={ptrace_mode} onChange={change_ptrace_mode}/> Pallet Trace  </label>
             <label><input type="checkbox" className="form-center-control" id="disp_mode" onChange={change_disp_mode}/> Stack </label>
             <br/>
-            <label><input type="checkbox" className="form-center-control" id="pstats" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats</label>
+            <label><input type="checkbox" className="form-center-control" id="pstats" checked={pstat_disp} onChange={change_pstat_disp}/> PalStats </label>
+            <label><input type="checkbox" className="form-center-control" id="pinfo" checked={pinfo_disp} onChange={change_pinfo_disp}/> Info</label>
           </div>
           <div className="col-md-2">
           <div className="col-md-4"><label htmlFor="disp_mode" className="form-label"><span className="form-control-plaintext">再生関係</span></label></div>
