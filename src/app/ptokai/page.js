@@ -337,12 +337,12 @@ export default function Page() {
                 cursor__touch="rayOrigin: touch"
                 */}
                 <a-assets>
-                    <a-asset-item id="iconfontsolid" src="fonts/fa-solid-900.ttf"></a-asset-item>
-                    <a-asset-item id="iconfontbrand" src="fonts/fa-brands-400.ttf"></a-asset-item>
-                    <a-asset-item id="BIZfont" src="fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontsolid" src="http://localhost:3000/fonts/fa-solid-900.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontbrand" src="http://localhost:3000/fonts/fa-brands-400.ttf"></a-asset-item>
+                    <a-asset-item id="BIZfont" src="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
 
-                    <img id="FloorImage" src="stitched_20241106105031.jpg"></img>
-                    <video id="FloorVideo" src="video/new_small_overlap_1100_1200_ts_2x_nkawa1934.mp4"></video>
+                    <img id="FloorImage" src="http://localhost:3000/stitched_20241106105031.jpg"></img>
+                    <video id="FloorVideo" src="http://localhost:3000/video/new_small_overlap_1100_1200_ts_2x_nkawa1934.mp4"></video>
                 </a-assets>
 
                 {/*　ここで倉庫の床面を記述したい  サイズは */}
