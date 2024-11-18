@@ -5,18 +5,20 @@ import * as React from 'react'
 
 import Head from 'next/head';
 import Script from 'next/script';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
     const [menu_item, set_menu_item] = React.useState([]);
+    const router = useRouter();
 
     const workButtonAction = (e, id) => {
       console.log('workButtonAction', id, e);
       if (id == "0") {
-          window.location.replace('/ptokai'); // goto second!
+          router.push('/ptokai'); // goto second!
       } else if (id == '2') {
-          window.location.replace('/ptokai1112'); // goto second!
+          router.push('/ptokai1112'); // goto second!
       } else if (id == '3') {
-          window.location.replace('/virtual'); // goto third!
+          router.push('/virtual'); // goto third!
       }
     }
 

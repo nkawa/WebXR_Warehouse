@@ -12,15 +12,6 @@ const cors = require('cors');
 
 app.commandLine.appendSwitch('ignore-gpu-blacklist'); // GPU のブラックリストを無視
 app.commandLine.appendSwitch('ignore-gpu-blocklist');
-app.commandLine.appendSwitch('enable-webgl'); // WebGL を有効化
-app.commandLine.appendSwitch('enable-features', 'WebGL,WebGL2,WebXR,WebXRHandInput,WebGL2ComputeRenderingContext'); // WebXR を有効化
-app.commandLine.appendSwitch('enable-unsafe-es3-apis');
-app.commandLine.appendSwitch('enable-unsafe-webgpu');
-app.commandLine.appendSwitch('no-sandbox');
-
-console.log(app.getGPUFeatureStatus());
-
-// app.disableHardwareAcceleration();
 
 // Prepare the renderer once the app is ready
 app.on("ready", async () => {
@@ -48,9 +39,8 @@ app.on("ready", async () => {
       contextIsolation: true,
       preload: join(__dirname, "preload.js"),
       webgl: true, // enable webgl
-      webSecurity: false,
       devTools: true, // enable devtools,
-      experimentalFeatures: true,
+      sandbox: false,
     },
   });
 
@@ -62,6 +52,7 @@ app.on("ready", async () => {
         slashes: true,
       });
 
+  console.log(app.getGPUFeatureStatus());
   mainWindow.loadURL(url);
   mainWindow.webContents.openDevTools();
 });
