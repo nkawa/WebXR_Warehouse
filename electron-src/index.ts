@@ -44,7 +44,7 @@ app.on("ready", async () => {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: true,
       preload: join(__dirname, "preload.js"),
       webgl: true, // enable webgl
@@ -62,9 +62,7 @@ app.on("ready", async () => {
         slashes: true,
       });
 
-  console.log(url);
-  // mainWindow.loadURL(url);
-  mainWindow.loadURL("chrome://gpu");
+  mainWindow.loadURL(url);
   mainWindow.webContents.openDevTools();
 });
 
