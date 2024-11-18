@@ -4,14 +4,14 @@
   "private": true,
   "main": "main/index.js",
   "scripts": {
-    "clean": "rimraf dist main renderer/out renderer/.next",
+    "clean": "rimraf dist main src/out src/.next",
     "dev:electron": "npm run build-electron && electron .",
-    "build-renderer": "next build renderer",
+    "build-renderer": "next build src",
     "build-electron": "tsc -p electron-src",
     "build:electron": "npm run build-renderer && npm run build-electron",
-    "pack-app": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
-    "type-check": "tsc -p ./renderer/tsconfig.json && tsc -p ./electron-src/tsconfig.json",
+    "pack-app": "npm run build:electron && electron-builder --dir",
+    "dist": "npm run build:electron && electron-builder",
+    "type-check": "tsc -p ./src/tsconfig.json && tsc -p ./electron-src/tsconfig.json",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -53,5 +53,6 @@
       "src/out",
       "public"
     ]
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

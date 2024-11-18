@@ -44,3 +44,5 @@ public/video
 
 .next
 main
+dist
+src/out
