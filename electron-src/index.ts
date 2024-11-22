@@ -1,14 +1,15 @@
 // Native
 import { join } from "path";
-import { format } from "url";
 const path = require('path');
 
 // Packages
 import { BrowserWindow, app, ipcMain, IpcMainEvent } from "electron";
+import { getRandomPort } from 'get-port-please';
 import isDev from "electron-is-dev";
 import prepareNext from "electron-next";
 const express = require('express');
 const cors = require('cors');
+let publicAssetsPort = 3000;
 
 app.commandLine.appendSwitch('ignore-gpu-blacklist'); // GPU のブラックリストを無視
 app.commandLine.appendSwitch('ignore-gpu-blocklist');
@@ -16,17 +17,17 @@ app.commandLine.appendSwitch('ignore-gpu-blocklist');
 // Prepare the renderer once the app is ready
 app.on("ready", async () => {
   // Express サーバーを作成
-  const server = express();
-  server.use(cors());
+  const publicAssetsExpress = express();
+  publicAssetsExpress.use(cors());
 
   // public フォルダを静的ファイルとして提供
-  const publicPath = path.join(__dirname, '../public');
-  server.use(express.static(publicPath));
+  const publicAssetsPath = path.join(__dirname, '../public');
+  publicAssetsExpress.use(express.static(publicAssetsPath));
 
   // サーバーを起動
-  const port = 3000; // 任意のポート
-  server.listen(port, () => {
-      console.log(`Server is running at http://localhost:${port}`);
+  //publicAssetsPort = await getRandomPort();
+  publicAssetsExpress.listen(publicAssetsPort, '127.0.0.1', () => {
+      console.log(`Public Assets Server is running at http://localhost:${publicAssetsPort}`);
   });
   
   await prepareNext("./src");
@@ -44,17 +45,23 @@ app.on("ready", async () => {
     },
   });
 
-  const url = isDev
-    ? "http://localhost:8000/"
-    : format({
-        pathname: join(__dirname, "../src/out/index.html"),
-        protocol: "file:",
-        slashes: true,
-      });
-
   console.log(app.getGPUFeatureStatus());
-  mainWindow.loadURL(url);
-  mainWindow.webContents.openDevTools();
+
+  if (isDev) {
+    mainWindow.loadURL("http://localhost:8000/");
+    mainWindow.webContents.openDevTools();
+  } else {
+    const appExpress = express();
+    appExpress.use(express.static(join(__dirname, '../src/out')));
+    const appPort = await getRandomPort();
+    appExpress.listen(appPort, '127.0.0.1', () => {
+      console.log(`App Server is running at http://localhost:${appPort}`);
+    });
+    mainWindow.loadURL(`http://localhost:${appPort}/`);
+    // @ts-ignore (define in dts)
+    mainWindow.webContents.openDevTools();
+  }
+
 });
 
 // Quit the app once all windows are closed
