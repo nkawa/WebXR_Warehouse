@@ -4,7 +4,7 @@ import Script from 'next/script';
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import CSR from '../components/csr';
+import CSR from '../components/CSR';
 
 
 const inter = Inter({ subsets: ["latin"] });
