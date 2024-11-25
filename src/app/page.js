@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react'
@@ -6,6 +5,10 @@ import * as React from 'react'
 import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/navigation';
+
+import 'aframe';
+import 'aframe-troika-text';
+import '../components/aframe-gui';
 
 export default function Page() {
     const [menu_item, set_menu_item] = React.useState([]);
@@ -24,13 +27,8 @@ export default function Page() {
 
     React.useEffect(() => {
       if (typeof window !== "undefined") {
-        require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
-        require('../components/aframe-gui');
-        require('aframe-troika-text');
-
         window.workButtonAction = workButtonAction;
         console.log("Window Action", window.workButtonAction);
-  
       }
       const data = [
         { "title": "プラネット東海", "datetime": "2024年10月03日 7時-12時" },

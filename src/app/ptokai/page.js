@@ -14,6 +14,15 @@ import { load_workers } from './load_worker_stat.js';
 import WorkerTaskStates from "../../components/WorkerTaskStates";
 import PalletInfoDisp from '../../components/PalletInfoDisp';
 
+import "aframe";
+import 'aframe-troika-text';
+import 'aframe-orbit-controls';
+import '../../components/aframe-gui';
+import '../../vendor/button-wasd-controls';
+import '../../components/updown-key-controls';
+import './boxObjects.js'; // A-Frame pallets
+import './workerObjects.js'; // A-Frame workers
+
 
 export default function Page() {
 
@@ -250,14 +259,6 @@ export default function Page() {
                 workerEl.addEventListener("worker_task",handleWorkerEvent);
             }
 
-            require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
-            require('aframe-troika-text');
-            require('aframe-orbit-controls');
-            require('../../components/aframe-gui');
-            require('../../vendor/button-wasd-controls');
-            require('../../components/updown-key-controls');
-            require('./boxObjects.js'); // A-Frame pallets
-            require('./workerObjects.js'); // A-Frame workers
             //            require('../../components/camera-move-notify');// カメラ移動通知
             //            require('./load_worker_stat');// データ読み込み
 
