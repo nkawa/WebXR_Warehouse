@@ -14,6 +14,15 @@ import { load_workers } from './load_worker_stat.js';
 import WorkerTaskStates from "../../components/WorkerTaskStates";
 import PalletInfoDisp from '../../components/PalletInfoDisp';
 
+import "aframe";
+import 'aframe-troika-text';
+import 'aframe-orbit-controls';
+import '../../components/aframe-gui';
+import '../../vendor/button-wasd-controls';
+import '../../components/updown-key-controls';
+import './boxObjects.js'; // A-Frame pallets
+import './workerObjects.js'; // A-Frame workers
+
 
 export default function Page() {
 
@@ -250,14 +259,6 @@ export default function Page() {
                 workerEl.addEventListener("worker_task",handleWorkerEvent);
             }
 
-            require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
-            require('aframe-troika-text');
-            require('aframe-orbit-controls');
-            require('../../components/aframe-gui');
-            require('../../vendor/button-wasd-controls');
-            require('../../components/updown-key-controls');
-            require('./boxObjects.js'); // A-Frame pallets
-            require('./workerObjects.js'); // A-Frame workers
             //            require('../../components/camera-move-notify');// カメラ移動通知
             //            require('./load_worker_stat');// データ読み込み
 
@@ -337,12 +338,12 @@ export default function Page() {
                 cursor__touch="rayOrigin: touch"
                 */}
                 <a-assets>
-                    <a-asset-item id="iconfontsolid" src="fonts/fa-solid-900.ttf"></a-asset-item>
-                    <a-asset-item id="iconfontbrand" src="fonts/fa-brands-400.ttf"></a-asset-item>
-                    <a-asset-item id="BIZfont" src="fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontsolid" src="http://localhost:3000/fonts/fa-solid-900.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontbrand" src="http://localhost:3000/fonts/fa-brands-400.ttf"></a-asset-item>
+                    <a-asset-item id="BIZfont" src="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
 
-                    <img id="FloorImage" src="stitched_20241106105031.jpg"></img>
-                    <video id="FloorVideo" src="video/new_small_overlap_1100_1200_ts_2x_nkawa1934.mp4"></video>
+                    <img id="FloorImage" src="http://localhost:3000/stitched_20241106105031.jpg"></img>
+                    <video id="FloorVideo" src="http://localhost:3000/video/new_small_overlap_1100_1200_ts_2x_nkawa1934.mp4"></video>
                 </a-assets>
 
                 {/*　ここで倉庫の床面を記述したい  サイズは */}

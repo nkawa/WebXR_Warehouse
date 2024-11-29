@@ -68,7 +68,7 @@ AFRAME.registerComponent("pallets", {
   
       // 本当は以下のファイル読み込みはパラレルで実行可能
         try {
-            const res = await fetch('/ptokai_box_info.json');
+            const res = await fetch('http://localhost:3000/ptokai_box_info.json');
             this.box_info = await res.json();
             console.log("Load Box ", this.box_info.length);
 
@@ -79,7 +79,7 @@ AFRAME.registerComponent("pallets", {
 
         //pallet_trace // こっちはパレットの経路をパレット毎に作成済み（start.end 付き)
         try {
-            const res = await fetch('/pallet_trace_20241003_1100-1130.json');
+            const res = await fetch('http://localhost:3000/pallet_trace_20241003_1100-1130.json');
             this.pallet_trace = await res.json();
             console.log("Load Pallet Trace ", this.pallet_trace.length);
 
@@ -95,7 +95,7 @@ AFRAME.registerComponent("pallets", {
 
         // 各パレットの状態（start/end/insp_start,end )
         try {
-            const res =  await fetch('/box_insp_sort_area_07-12.json');
+            const res =  await fetch('http://localhost:3000/box_insp_sort_area_07-12.json');
             const data = await res.json();
             this.pallets = data
             console.log("Load pallet ", data.length);
@@ -158,7 +158,7 @@ AFRAME.registerComponent("pallets", {
 
       // パレット移動情報を読み込む
         try{
-            const res =  await fetch('/frame_based_pallet_1110.json');
+            const res =  await fetch('http://localhost:3000/frame_based_pallet_1110.json');
             const data = await res.json();
 
             // フレーム毎の配列にしたい。（現状は各フレーム内にframe_id が入ってる）

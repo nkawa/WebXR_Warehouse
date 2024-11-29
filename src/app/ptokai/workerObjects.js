@@ -82,7 +82,7 @@ AFRAME.registerComponent("workers", {
     this.previousRotation = new THREE.Euler();
     
     try{// ワーカの配列で、タスクの start/end が記載
-      const res = await fetch("/worker_task_eachframe_20241003_11.json");
+      const res = await fetch("http://localhost:3000/worker_task_eachframe_20241003_11.json");
       this.w_task = await res.json();
       console.log("Load worker task info",this.w_task.length);
     } catch (err) {
@@ -90,7 +90,7 @@ AFRAME.registerComponent("workers", {
     }
 
     try {
-      const res = await fetch("/frame_based_worker_1110.json");
+      const res = await fetch("http://localhost:3000/frame_based_worker_1110.json");
       this.workers = await res.json();
       console.log("Load workers ", this.workers.length);
       const scene = document.querySelector("a-scene");

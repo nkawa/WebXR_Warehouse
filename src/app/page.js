@@ -1,34 +1,34 @@
-
 "use client";
 
 import * as React from 'react'
 
 import Head from 'next/head';
 import Script from 'next/script';
+import { useRouter } from 'next/navigation';
+
+import 'aframe';
+import 'aframe-troika-text';
+import '../components/aframe-gui';
 
 export default function Page() {
     const [menu_item, set_menu_item] = React.useState([]);
+    const router = useRouter();
 
     const workButtonAction = (e, id) => {
       console.log('workButtonAction', id, e);
       if (id == "0") {
-          window.location.replace('/ptokai'); // goto second!
+          router.push('/ptokai'); // goto second!
       } else if (id == '2') {
-          window.location.replace('/ptokai1112'); // goto second!
+          router.push('/ptokai1112'); // goto second!
       } else if (id == '3') {
-          window.location.replace('/virtual'); // goto third!
+          router.push('/virtual'); // goto third!
       }
     }
 
     React.useEffect(() => {
       if (typeof window !== "undefined") {
-        require("aframe");// <-結局、A-Frameは動的なインポートをするのが重要！
-        require('../components/aframe-gui');
-        require('aframe-troika-text');
-
         window.workButtonAction = workButtonAction;
         console.log("Window Action", window.workButtonAction);
-  
       }
       const data = [
         { "title": "プラネット東海", "datetime": "2024年10月03日 7時-12時" },
@@ -53,9 +53,9 @@ export default function Page() {
                 cursor__touch="rayOrigin: touch"
             >
                 <a-assets>
-                    <a-asset-item id="iconfontsolid" src="fonts/fa-solid-900.ttf"></a-asset-item>
-                    <a-asset-item id="iconfontbrand" src="fonts/fa-brands-400.ttf"></a-asset-item>
-                    <a-asset-item id="BIZfont" src="fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontsolid" src="http://localhost:3000/fonts/fa-solid-900.ttf"></a-asset-item>
+                    <a-asset-item id="iconfontbrand" src="http://localhost:3000/fonts/fa-brands-400.ttf"></a-asset-item>
+                    <a-asset-item id="BIZfont" src="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"></a-asset-item>
                 </a-assets>
 
                 <a-gui-flex-container id="topflex"
@@ -67,7 +67,7 @@ export default function Page() {
                         width="4.8" height="0.75"
                         value="仮想物流倉庫"
                         background-color="#7777ee"
-                        font-family="fonts/BIZUDPGothic-Bold.ttf"
+                        font-family="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"
                         font-size="0.35"
                         line-height="0.8"
                         letter-spacing="0"
@@ -98,8 +98,8 @@ export default function Page() {
                         width="1.6" height="0.7"
                         icon="f015"
                         value="ホーム"
-                        icon-font="fonts/fa-solid-900.ttf"
-                        font-family="fonts/BIZUDPGothic-Bold.ttf"
+                        icon-font="http://localhost:3000/fonts/fa-solid-900.ttf"
+                        font-family="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"
                         margin="0 0 0 0.7"
                         onclick="workButtonAction" click-arg="home"
                     >
@@ -108,8 +108,8 @@ export default function Page() {
                         width="1.5" height="0.7"
                         icon="f013"
                         value="設定"
-                        icon-font="fonts/fa-solid-900.ttf"
-                        font-family="fonts/BIZUDPGothic-Bold.ttf"
+                        icon-font="http://localhost:3000/fonts/fa-solid-900.ttf"
+                        font-family="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"
                         depth="0.3"
                         margin="0.2 0 0.05 0"
                         onclick="workButtonAction" click-arg="setting"
@@ -119,9 +119,9 @@ export default function Page() {
                     <a-gui-icon-label-button
                         width="1.95" height="0.7"
                         icon="f2b9"
-                        icon-font="fonts/fa-solid-900.ttf"
+                        icon-font="http://localhost:3000/fonts/fa-solid-900.ttf"
                         value="パーソナル設定"
-                        font-family="fonts/BIZUDPGothic-Bold.ttf"
+                        font-family="http://localhost:3000/fonts/BIZUDPGothic-Bold.ttf"
                         font-size="0.16"
                         margin="0.2 0 0.05 0"
                         onclick="workButtonAction" click-arg="personal"
