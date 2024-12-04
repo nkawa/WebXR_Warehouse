@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@lookingglass/webxr':
+        specifier: ^0.6.0
+        version: 0.6.0
       aframe:
         specifier: ^1.6.0
         version: 1.6.0
@@ -245,6 +248,12 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@lookingglass/webxr-polyfill@0.1.1':
+    resolution: {integrity: sha512-xrsJ8zhBAgE1EglLgbiVX3Z9q0mib/EYBCl31KCXTt7zyCmCSj9PgQ7apqFZBfXbbEEoP7LDBsTWNqzNphczew==}
+
+  '@lookingglass/webxr@0.6.0':
+    resolution: {integrity: sha512-BLfVOQiINLdC/o53OsXeFhIvK44HIe0pQOUGph7EV3JjHmawuMBO1UwtTIHxemsPar9knCKAilCxKkRAjG1YMw==}
 
   '@next/env@15.0.3':
     resolution: {integrity: sha512-t9Xy32pjNOvVn2AS+Utt6VmyrshbpfUMhIjFO60gI58deSo/KgLOp31XZ4O+kY/Is8WAGYwA5gR7kOb1eORDBA==}
@@ -615,6 +624,9 @@ packages:
 
   cardboard-vr-display@1.0.19:
     resolution: {integrity: sha512-+MjcnWKAkb95p68elqZLDPzoiF/dGncQilLGvPBM5ZorABp/ao3lCs7nnRcYBckmuNkg1V/5rdGDKoUaCVsHzQ==}
+
+  cbor-js@0.1.0:
+    resolution: {integrity: sha512-7sQ/TvDZPl7csT1Sif9G0+MA0I0JOVah8+wWlJVQdVEgIbCzlN/ab3x+uvMNsc34TUvO6osQTAmB2ls80JX6tw==}
 
   centra@2.7.0:
     resolution: {integrity: sha512-PbFMgMSrmgx6uxCdm57RUos9Tc3fclMvhLSATYN39XsDV29B89zZ3KA89jmY0vwSGazyU+uerqwa6t+KaodPcg==}
@@ -1028,6 +1040,9 @@ packages:
   get-tsconfig@4.8.1:
     resolution: {integrity: sha512-k9PN+cFBmaLWtVz29SkUoqU5O0slLuHJXt/2P+tMVFT+phsSGXGkp9t3rQIqdz0e+06EHNGs3oM6ZX1s2zHxRg==}
 
+  gl-matrix@2.8.1:
+    resolution: {integrity: sha512-0YCjVpE3pS5XWlN3J4X7AiAx65+nqAI54LndtVFnQZB6G/FVLkZH8y8V6R3cIoOQR4pUdfwQGd1iwyoXHJ4Qfw==}
+
   gl-preserve-state@1.0.0:
     resolution: {integrity: sha512-zQZ25l3haD4hvgJZ6C9+s0ebdkW9y+7U2qxvGu1uWOJh8a4RU+jURIKEQhf8elIlFpMH6CrAY2tH0mYrRjet3Q==}
 
@@ -1095,6 +1110,9 @@ packages:
 
   help-me@5.0.0:
     resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
+
+  holoplay-core@0.0.11:
+    resolution: {integrity: sha512-uDbAqWYP5S7BR13ZILX20Lc+xbcRwSznXXBksZAkuwuf+tqsXJBBugwWbiNRV10wEOyGfHun44/l56KW2++FKw==}
 
   http-cache-semantics@4.1.1:
     resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
@@ -2036,6 +2054,18 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  ws@7.5.10:
+    resolution: {integrity: sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==}
+    engines: {node: '>=8.3.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   ws@8.18.0:
     resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
     engines: {node: '>=10.0.0'}
@@ -2240,6 +2270,20 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@lookingglass/webxr-polyfill@0.1.1':
+    dependencies:
+      cardboard-vr-display: 1.0.19
+      gl-matrix: 2.8.1
+
+  '@lookingglass/webxr@0.6.0':
+    dependencies:
+      '@lookingglass/webxr-polyfill': 0.1.1
+      gl-matrix: 2.8.1
+      holoplay-core: 0.0.11
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   '@next/env@15.0.3': {}
 
@@ -2643,6 +2687,8 @@ snapshots:
       gl-preserve-state: 1.0.0
       nosleep.js: 0.7.0
       webvr-polyfill-dpdb: 1.0.18
+
+  cbor-js@0.1.0: {}
 
   centra@2.7.0(debug@4.3.7):
     dependencies:
@@ -3211,6 +3257,8 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
+  gl-matrix@2.8.1: {}
+
   gl-preserve-state@1.0.0: {}
 
   glob-parent@5.1.2:
@@ -3287,6 +3335,14 @@ snapshots:
       function-bind: 1.1.2
 
   help-me@5.0.0: {}
+
+  holoplay-core@0.0.11:
+    dependencies:
+      cbor-js: 0.1.0
+      ws: 7.5.10
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   http-cache-semantics@4.1.1: {}
 
@@ -4339,6 +4395,8 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
+
+  ws@7.5.10: {}
 
   ws@8.18.0: {}
 

@@ -4,6 +4,8 @@
 import * as React from 'react'
 //import 'aframe';
 
+import { LookingGlassWebXRPolyfill, LookingGlassConfig} from "@lookingglass/webxr"
+
 import Head from 'next/head';
 import Script from 'next/script';
 import Controller from './controller.js';
@@ -14,6 +16,12 @@ import { load_workers } from './load_worker_stat.js';
 import WorkerTaskStates from "../../components/WorkerTaskStates";
 import PalletInfoDisp from '../../components/PalletInfoDisp';
 
+const config = LookingGlassConfig
+config.targetY = 0
+config.targetZ = 0
+config.targetDiam = 3
+config.fovy = (14 * Math.PI) / 180
+new LookingGlassWebXRPolyfill()
 
 export default function Page() {
 
